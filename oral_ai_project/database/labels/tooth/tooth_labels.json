@@ -1,0 +1,278 @@
+[
+  {
+    "timestamp": "2025-04-21_09-14-22",
+    "data": {
+      "label": "Gingivitis (置信度: 0.93)"
+    }
+  },
+  {
+    "timestamp": "2025-04-22_11-05-44",
+    "data": {
+      "label": "Caries (置信度: 0.89)"
+    }
+  },
+  {
+    "timestamp": "2025-04-23_08-39-15",
+    "data": {
+      "label": "Hypodontia (置信度: 0.87)"
+    }
+  },
+  {
+    "timestamp": "2025-04-24_16-18-52",
+    "data": {
+      "label": "Mouth Ulcer (置信度: 0.94)"
+    }
+  },
+  {
+    "timestamp": "2025-04-25_12-45-33",
+    "data": {
+      "label": "Calculus (置信度: 0.91)"
+    }
+  },
+  {
+    "timestamp": "2025-04-26_13-57-20",
+    "data": {
+      "label": "Tooth Discoloration (置信度: 0.90)"
+    }
+  },
+  {
+    "timestamp": "2025-04-27_10-14-48",
+    "data": {
+      "label": "Hypodontia (置信度: 0.85)"
+    }
+  },
+  {
+    "timestamp": "2025-04-28_15-33-11",
+    "data": {
+      "label": "Caries (置信度: 0.96)"
+    }
+  },
+  {
+    "timestamp": "2025-04-29_17-08-04",
+    "data": {
+      "label": "Calculus (置信度: 0.89)"
+    }
+  },
+  {
+    "timestamp": "2025-04-30_09-27-37",
+    "data": {
+      "label": "Mouth Ulcer (置信度: 0.92)"
+    }
+  },
+  {
+    "timestamp": "2025-05-01_10-41-00",
+    "data": {
+      "label": "Tooth Discoloration (置信度: 0.95)"
+    }
+  },
+  {
+    "timestamp": "2025-05-02_14-16-29",
+    "data": {
+      "label": "Gingivitis (置信度: 0.88)"
+    }
+  },
+  {
+    "timestamp": "2025-05-03_11-32-45",
+    "data": {
+      "label": "Caries (置信度: 0.99)"
+    }
+  },
+  {
+    "timestamp": "2025-05-04_08-50-13",
+    "data": {
+      "label": "Hypodontia (置信度: 0.91)"
+    }
+  },
+  {
+    "timestamp": "2025-05-05_12-12-58",
+    "data": {
+      "label": "Calculus (置信度: 0.86)"
+    }
+  },
+  {
+    "timestamp": "2025-05-06_16-24-41",
+    "data": {
+      "label": "Mouth Ulcer (置信度: 0.97)"
+    }
+  },
+  {
+    "timestamp": "2025-05-07_09-17-26",
+    "data": {
+      "label": "Tooth Discoloration (置信度: 0.88)"
+    }
+  },
+  {
+    "timestamp": "2025-05-08_13-30-12",
+    "data": {
+      "label": "Gingivitis (置信度: 0.92)"
+    }
+  },
+  {
+    "timestamp": "2025-05-09_15-47-03",
+    "data": {
+      "label": "Caries (置信度: 0.90)"
+    }
+  },
+  {
+    "timestamp": "2025-05-10_08-41-39",
+    "data": {
+      "label": "Hypodontia (置信度: 0.89)"
+    }
+  },
+  {
+    "timestamp": "2025-05-11_11-14-27",
+    "data": {
+      "label": "Calculus (置信度: 0.87)"
+    }
+  },
+  {
+    "timestamp": "2025-05-12_10-05-54",
+    "data": {
+      "label": "Mouth Ulcer (置信度: 0.91)"
+    }
+  },
+  {
+    "timestamp": "2025-05-13_14-58-20",
+    "data": {
+      "label": "Tooth Discoloration (置信度: 0.93)"
+    }
+  },
+  {
+    "timestamp": "2025-05-14_13-18-35",
+    "data": {
+      "label": "Gingivitis (置信度: 0.90)"
+    }
+  },
+  {
+    "timestamp": "2025-05-15_12-44-50",
+    "data": {
+      "label": "Caries (置信度: 0.94)"
+    }
+  },
+  {
+    "timestamp": "2025-05-16_09-33-42",
+    "data": {
+      "label": "Hypodontia (置信度: 0.88)"
+    }
+  },
+  {
+    "timestamp": "2025-05-17_16-20-10",
+    "data": {
+      "label": "Calculus (置信度: 0.95)"
+    }
+  },
+  {
+    "timestamp": "2025-05-18_15-27-08",
+    "data": {
+      "label": "Mouth Ulcer (置信度: 0.89)"
+    }
+  },
+  {
+    "timestamp": "2025-05-19_08-38-59",
+    "data": {
+      "label": "Tooth Discoloration (置信度: 0.91)"
+    }
+  },
+  {
+    "timestamp": "2025-05-20_10-49-16",
+    "data": {
+      "label": "Gingivitis (置信度: 0.86)"
+    }
+  },
+  {
+    "timestamp": "2025-05-21_18-52-02",
+    "data": {
+      "label": "Caries (置信度: 0.91)"
+    }
+  },
+  {
+    "timestamp": "2025-05-22_01-27-43",
+    "data": {
+      "label": "Tooth Discoloration (置信度: 0.79)"
+    }
+  },
+  {
+    "timestamp": "2025-05-22_16-07-47",
+    "data": {
+      "label": "Tooth Discoloration (置信度: 0.79)"
+    }
+  },
+  {
+    "timestamp": "2025-05-22_16-12-33",
+    "data": {
+      "label": "Gingivitis (置信度: 0.73)"
+    }
+  },
+  {
+    "timestamp": "2025-05-22_16-15-07",
+    "data": {
+      "label": "Gingivitis (置信度: 0.91)"
+    }
+  },
+  {
+    "timestamp": "2025-05-22_16-18-58",
+    "data": {
+      "label": "Gingivitis (置信度: 0.92)"
+    }
+  },
+  {
+    "timestamp": "2025-05-22_16-32-11",
+    "data": {
+      "label": "Gingivitis (置信度: 0.91)"
+    }
+  },
+  {
+    "timestamp": "2025-05-22_16-39-56",
+    "data": {
+      "label": "Hypodontia (置信度: 0.91)"
+    }
+  },
+  {
+    "timestamp": "2025-05-22_16-44-27",
+    "data": {
+      "label": "Hypodontia (置信度: 0.91)"
+    }
+  },
+  {
+    "timestamp": "2025-05-22_17-16-23",
+    "data": {
+      "label": "Calculus",
+      "confidence": "0.49"
+    }
+  },
+  {
+    "timestamp": "2025-05-22_17-49-30",
+    "data": {
+      "label": "Calculus",
+      "confidence": "0.49"
+    }
+  },
+  {
+    "timestamp": "2025-05-22_18-04-10",
+    "data": {
+      "label": "Gingivitis",
+      "confidence": "0.92"
+    }
+  },
+  {
+    "timestamp": "2025-05-22_18-28-54",
+    "data": {
+      "label": "Caries",
+      "confidence": "0.91"
+    }
+  },
+  {
+    "timestamp": "2025-05-23_10-34-41",
+    "data": {
+      "label": "Tooth Discoloration",
+      "confidence": "0.91"
+    }
+  },
+  {
+    "timestamp": "2025-05-23_15-53-59",
+    "data": {
+      "label": "Calculus",
+      "confidence": "0.49"
+    }
+  }
+]

@@ -1,0 +1,506 @@
+[
+  {
+    "timestamp": "2025-04-21_10-14-32",
+    "data": {
+      "tongue_color": 2,
+      "coating_color": 1,
+      "thickness": 0,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-04-22_14-25-17",
+    "data": {
+      "tongue_color": 0,
+      "coating_color": 2,
+      "thickness": 1,
+      "rot_greasy": 0
+    }
+  },
+  {
+    "timestamp": "2025-04-23_08-43-59",
+    "data": {
+      "tongue_color": 3,
+      "coating_color": 1,
+      "thickness": 1,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-04-24_16-22-18",
+    "data": {
+      "tongue_color": 1,
+      "coating_color": 0,
+      "thickness": 0,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-04-25_12-30-05",
+    "data": {
+      "tongue_color": 4,
+      "coating_color": 1,
+      "thickness": 1,
+      "rot_greasy": 0
+    }
+  },
+  {
+    "timestamp": "2025-04-26_09-15-40",
+    "data": {
+      "tongue_color": 1,
+      "coating_color": 2,
+      "thickness": 0,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-04-27_13-18-52",
+    "data": {
+      "tongue_color": 3,
+      "coating_color": 0,
+      "thickness": 1,
+      "rot_greasy": 0
+    }
+  },
+  {
+    "timestamp": "2025-04-28_11-45-23",
+    "data": {
+      "tongue_color": 2,
+      "coating_color": 1,
+      "thickness": 1,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-04-29_07-59-11",
+    "data": {
+      "tongue_color": 0,
+      "coating_color": 0,
+      "thickness": 0,
+      "rot_greasy": 0
+    }
+  },
+  {
+    "timestamp": "2025-04-30_17-04-44",
+    "data": {
+      "tongue_color": 4,
+      "coating_color": 2,
+      "thickness": 1,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-05-01_08-33-26",
+    "data": {
+      "tongue_color": 2,
+      "coating_color": 0,
+      "thickness": 0,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-05-02_15-20-38",
+    "data": {
+      "tongue_color": 1,
+      "coating_color": 1,
+      "thickness": 0,
+      "rot_greasy": 0
+    }
+  },
+  {
+    "timestamp": "2025-05-03_10-45-51",
+    "data": {
+      "tongue_color": 3,
+      "coating_color": 2,
+      "thickness": 1,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-05-04_14-12-04",
+    "data": {
+      "tongue_color": 0,
+      "coating_color": 0,
+      "thickness": 1,
+      "rot_greasy": 0
+    }
+  },
+  {
+    "timestamp": "2025-05-05_16-39-21",
+    "data": {
+      "tongue_color": 1,
+      "coating_color": 1,
+      "thickness": 0,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-05-06_11-53-37",
+    "data": {
+      "tongue_color": 2,
+      "coating_color": 0,
+      "thickness": 1,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-05-07_09-24-46",
+    "data": {
+      "tongue_color": 4,
+      "coating_color": 2,
+      "thickness": 0,
+      "rot_greasy": 0
+    }
+  },
+  {
+    "timestamp": "2025-05-08_13-05-32",
+    "data": {
+      "tongue_color": 3,
+      "coating_color": 1,
+      "thickness": 1,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-05-09_10-41-10",
+    "data": {
+      "tongue_color": 1,
+      "coating_color": 0,
+      "thickness": 0,
+      "rot_greasy": 0
+    }
+  },
+  {
+    "timestamp": "2025-05-10_08-17-29",
+    "data": {
+      "tongue_color": 0,
+      "coating_color": 1,
+      "thickness": 1,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-05-11_12-08-51",
+    "data": {
+      "tongue_color": 2,
+      "coating_color": 2,
+      "thickness": 0,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-05-12_15-42-36",
+    "data": {
+      "tongue_color": 4,
+      "coating_color": 0,
+      "thickness": 1,
+      "rot_greasy": 0
+    }
+  },
+  {
+    "timestamp": "2025-05-13_09-27-43",
+    "data": {
+      "tongue_color": 1,
+      "coating_color": 1,
+      "thickness": 0,
+      "rot_greasy": 0
+    }
+  },
+  {
+    "timestamp": "2025-05-14_14-51-26",
+    "data": {
+      "tongue_color": 0,
+      "coating_color": 2,
+      "thickness": 1,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-05-15_11-35-18",
+    "data": {
+      "tongue_color": 3,
+      "coating_color": 0,
+      "thickness": 0,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-05-16_10-58-47",
+    "data": {
+      "tongue_color": 2,
+      "coating_color": 1,
+      "thickness": 1,
+      "rot_greasy": 0
+    }
+  },
+  {
+    "timestamp": "2025-05-17_13-49-02",
+    "data": {
+      "tongue_color": 1,
+      "coating_color": 0,
+      "thickness": 1,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-05-18_16-11-30",
+    "data": {
+      "tongue_color": 0,
+      "coating_color": 2,
+      "thickness": 0,
+      "rot_greasy": 0
+    }
+  },
+  {
+    "timestamp": "2025-05-19_08-27-58",
+    "data": {
+      "tongue_color": 4,
+      "coating_color": 1,
+      "thickness": 1,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-05-20_15-19-12",
+    "data": {
+      "tongue_color": 2,
+      "coating_color": 0,
+      "thickness": 0,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-05-21_18-39-53",
+    "data": {
+      "tongue_color": 1,
+      "coating_color": 0,
+      "thickness": 0,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-05-21_23-44-57",
+    "data": {
+      "tongue_color": 1,
+      "coating_color": 2,
+      "thickness": 1,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-05-21_23-53-49",
+    "data": {
+      "tongue_color": 1,
+      "coating_color": 0,
+      "thickness": 0,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-05-22_00-21-33",
+    "data": {
+      "tongue_color": 3,
+      "coating_color": 2,
+      "thickness": 1,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-05-22_00-23-47",
+    "data": {
+      "tongue_color": 1,
+      "coating_color": 0,
+      "thickness": 0,
+      "rot_greasy": 0
+    }
+  },
+  {
+    "timestamp": "2025-05-22_00-48-34",
+    "data": {
+      "tongue_color": 1,
+      "coating_color": 0,
+      "thickness": 0,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-05-22_00-52-30",
+    "data": {
+      "tongue_color": 1,
+      "coating_color": 0,
+      "thickness": 0,
+      "rot_greasy": 0
+    }
+  },
+  {
+    "timestamp": "2025-05-22_01-01-34",
+    "data": {
+      "tongue_color": 3,
+      "coating_color": 2,
+      "thickness": 1,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-05-22_01-14-02",
+    "data": {
+      "tongue_color": 1,
+      "coating_color": 2,
+      "thickness": 1,
+      "rot_greasy": 0
+    }
+  },
+  {
+    "timestamp": "2025-05-22_01-16-09",
+    "data": {
+      "tongue_color": 1,
+      "coating_color": 0,
+      "thickness": 0,
+      "rot_greasy": 0
+    }
+  },
+  {
+    "timestamp": "2025-05-22_01-18-46",
+    "data": {
+      "tongue_color": 2,
+      "coating_color": 2,
+      "thickness": 1,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-05-22_01-26-40",
+    "data": {
+      "tongue_color": 1,
+      "coating_color": 0,
+      "thickness": 0,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-05-22_16-08-55",
+    "data": {
+      "tongue_color": 2,
+      "coating_color": 2,
+      "thickness": 1,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-05-22_16-34-14",
+    "data": {
+      "tongue_color": 1,
+      "coating_color": 2,
+      "thickness": 1,
+      "rot_greasy": 0
+    }
+  },
+  {
+    "timestamp": "2025-05-22_16-37-17",
+    "data": {
+      "tongue_color": 1,
+      "coating_color": 0,
+      "thickness": 0,
+      "rot_greasy": 0
+    }
+  },
+  {
+    "timestamp": "2025-05-22_16-38-46",
+    "data": {
+      "tongue_color": 1,
+      "coating_color": 2,
+      "thickness": 1,
+      "rot_greasy": 0
+    }
+  },
+  {
+    "timestamp": "2025-05-22_17-19-27",
+    "data": {
+      "tongue_color": 3,
+      "coating_color": 2,
+      "thickness": 1,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-05-22_17-45-43",
+    "data": {
+      "tongue_color": 3,
+      "coating_color": 2,
+      "thickness": 1,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-05-22_18-26-42",
+    "data": {
+      "tongue_color": 4,
+      "coating_color": 2,
+      "thickness": 1,
+      "rot_greasy": 0
+    }
+  },
+  {
+    "timestamp": "2025-05-22_18-30-17",
+    "data": {
+      "tongue_color": 2,
+      "coating_color": 2,
+      "thickness": 0,
+      "rot_greasy": 0
+    }
+  },
+  {
+    "timestamp": "2025-05-22_18-31-15",
+    "data": {
+      "tongue_color": 1,
+      "coating_color": 0,
+      "thickness": 0,
+      "rot_greasy": 0
+    }
+  },
+  {
+    "timestamp": "2025-05-23_10-32-28",
+    "data": {
+      "tongue_color": 3,
+      "coating_color": 2,
+      "thickness": 1,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-05-23_10-45-23",
+    "data": {
+      "tongue_color": 0,
+      "coating_color": 1,
+      "thickness": 1,
+      "rot_greasy": 0
+    }
+  },
+  {
+    "timestamp": "2025-05-23_15-46-42",
+    "data": {
+      "tongue_color": 1,
+      "coating_color": 1,
+      "thickness": 0,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-05-23_16-01-15",
+    "data": {
+      "tongue_color": 2,
+      "coating_color": 0,
+      "thickness": 0,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-05-23_16-06-26",
+    "data": {
+      "tongue_color": 2,
+      "coating_color": 2,
+      "thickness": 1,
+      "rot_greasy": 0
+    }
+  }
+]
