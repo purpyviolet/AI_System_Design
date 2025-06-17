@@ -5,11 +5,13 @@ from model.tongue_classifier import classify_tongue
 from model.llm_interface_api import init_prompt_with_tooth_result, init_prompt_with_tongue_result, chat_with_llm
 from routes.analysis import analysis_bp
 from model.report_generate_ref import generate_structured_report, parse_report_content, create_pdf
+from speech_recognition import SpeechRecognition
 import os
 from datetime import datetime
 import json
 import tempfile
 from model.report_generator import ReportGenerator
+from werkzeug.utils import secure_filename
 
 app = Flask(__name__)
 
@@ -52,6 +54,11 @@ for check_type in ['tongue', 'tooth']:
     if not os.path.exists(label_file):
         with open(label_file, 'w', encoding='utf-8') as f:
             json.dump([], f)
+
+# 添加音频缓存目录
+AUDIO_CACHE_DIR = 'cache/audio'
+if not os.path.exists(AUDIO_CACHE_DIR):
+    os.makedirs(AUDIO_CACHE_DIR)
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
@@ -318,6 +325,53 @@ def generate_report():
     except Exception as e:
         print(f"生成报告失败: {str(e)}")
         return jsonify({'error': f'生成报告失败：{str(e)}'}), 500
+
+@app.route('/api/upload_audio', methods=['POST'])
+def upload_audio():
+    try:
+        if 'audio' not in request.files:
+            return jsonify({'error': '没有上传文件'}), 400
+        
+        audio_file = request.files['audio']
+        if audio_file.filename == '':
+            return jsonify({'error': '没有选择文件'}), 400
+        
+        # 生成安全的文件名
+        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        filename = secure_filename(f'recording_{timestamp}.wav')
+        filepath = os.path.join(AUDIO_CACHE_DIR, filename)
+        
+        # 保存文件
+        audio_file.save(filepath)
+        print(f"音频文件已保存: {filepath}")
+        
+        # 进行语音识别
+        recognizer = SpeechRecognition()
+        recognition_result = recognizer.recognize_audio(filepath)
+
+        print(f"语音识别结果: {recognition_result}")
+        if recognition_result:
+            # 获取AI回复
+            response = chat_with_llm(recognition_result)
+            
+            return jsonify({
+                'success': True,
+                'filename': filename,
+                'filepath': filepath,
+                'recognition_result': recognition_result,
+                'response': response
+            })
+        else:
+            return jsonify({
+                'success': True,
+                'filename': filename,
+                'filepath': filepath,
+                'error': '语音识别失败'
+            })
+        
+    except Exception as e:
+        print(f"音频处理失败: {str(e)}")
+        return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
     app.run(debug=True)

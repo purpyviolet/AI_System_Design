@@ -502,5 +502,32 @@
       "thickness": 1,
       "rot_greasy": 0
     }
+  },
+  {
+    "timestamp": "2025-05-25_20-32-16",
+    "data": {
+      "tongue_color": 1,
+      "coating_color": 0,
+      "thickness": 0,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-06-12_14-46-11",
+    "data": {
+      "tongue_color": 3,
+      "coating_color": 2,
+      "thickness": 1,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-06-12_14-49-03",
+    "data": {
+      "tongue_color": 3,
+      "coating_color": 2,
+      "thickness": 1,
+      "rot_greasy": 1
+    }
   }
 ]

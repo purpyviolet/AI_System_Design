@@ -75,6 +75,7 @@
             flex: 1;
             display: flex;
             height: 100%;
+            padding-right: 120px;
         }
 
         .sidebar {
@@ -90,6 +91,7 @@
             flex-direction: column;
             padding: 1rem;
             overflow: hidden;
+            position: relative;
         }
 
         .messages {
@@ -238,6 +240,7 @@
             justify-content: center;
             height: 36px;
             width: 36px;
+            z-index: 10;
         }
 
         .send-button:hover {
@@ -251,8 +254,8 @@
 
         .generate-report-btn {
             position: absolute;
-            right: 3rem;
-            bottom: 0.5rem;
+            right: -120px;
+            top: 1rem;
             background-color: #10b981;
             color: white;
             border: none;
@@ -260,10 +263,13 @@
             padding: 0.5rem 1rem;
             cursor: pointer;
             transition: background-color 0.2s;
-            display: flex;
+            display: none;
             align-items: center;
             gap: 0.5rem;
             font-size: 0.875rem;
+            height: 36px;
+            white-space: nowrap;
+            z-index: 10;
         }
 
         .generate-report-btn:hover {
@@ -278,6 +284,7 @@
         .generate-report-btn svg {
             width: 16px;
             height: 16px;
+            flex-shrink: 0;
         }
 
         .upload-area {
@@ -340,6 +347,78 @@
             font-size: 0.875rem;
             color: #4b5563;
         }
+
+        .voice-button {
+            position: absolute;
+            right: 3rem;
+            bottom: 0.5rem;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 36px;
+            width: 36px;
+            z-index: 10;
+        }
+
+        .voice-button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .voice-button.recording {
+            background-color: #dc2626;
+            animation: pulse 1.5s infinite;
+        }
+
+        .voice-button.recording:hover {
+            background-color: #b91c1c;
+        }
+
+        .voice-wave {
+            position: absolute;
+            right: 3rem;
+            bottom: 3.5rem;
+            width: 200px;
+            height: 60px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: none;
+            padding: 8px;
+            z-index: 1000;
+        }
+
+        .voice-wave.recording {
+            display: block;
+        }
+
+        .voice-wave canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .input-container textarea {
+            padding-right: 5rem;
+        }
     </style>
 </head>
 <body>
@@ -386,8 +465,16 @@
             <div class="messages" id="messages"></div>
             <div class="input-box">
                 <div class="input-container">
-                    <textarea id="user-input" placeholder="请输入你的问题…" rows="1"></textarea>
-                    <button class="generate-report-btn" id="generate-report-btn" onclick="generateReport()" style="display: none;">
+                    <textarea id="messageInput" placeholder="输入消息..." rows="1"></textarea>
+                    <button class="voice-button" id="voiceButton" title="点击开始录音">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                            <line x1="12" y1="19" x2="12" y2="23"></line>
+                            <line x1="8" y1="23" x2="16" y2="23"></line>
+                        </svg>
+                    </button>
+                    <button class="generate-report-btn" id="generate-report-btn" style="display: none;" onclick="generateReport()">
                         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                             <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -397,12 +484,15 @@
                         </svg>
                         生成报告
                     </button>
-                    <button class="send-button" onclick="sendMessage()">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M22 2L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <button class="send-button" id="sendButton" disabled>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
                         </svg>
                     </button>
+                </div>
+                <div class="voice-wave" id="voiceWave">
+                    <canvas id="audioVisualizer"></canvas>
                 </div>
             </div>
         </div>
@@ -412,6 +502,15 @@
         const messages = document.getElementById('messages');
         let isTyping = false;
         let chatHistory = [];
+
+        // 录音相关变量
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let isRecording = false;
+        let audioContext = null;
+        let analyser = null;
+        let dataArray = null;
+        let animationFrame = null;
 
         function formatMessage(text) {
             // 处理换行符
@@ -481,7 +580,10 @@
 
             // 如果是AI回复，显示生成报告按钮
             if (role === 'bot') {
-                document.getElementById('generate-report-btn').style.display = 'flex';
+                const generateReportBtn = document.getElementById('generate-report-btn');
+                if (generateReportBtn) {
+                    generateReportBtn.style.display = 'flex';
+                }
             }
         }
 
@@ -535,7 +637,7 @@
         }
 
         // 添加自动调整文本框高度的功能
-        const textarea = document.getElementById('user-input');
+        const textarea = document.getElementById('messageInput');
         textarea.addEventListener('input', function() {
             this.style.height = 'auto';
             this.style.height = (this.scrollHeight) + 'px';
@@ -543,7 +645,7 @@
 
         // 修改发送消息的函数
         async function sendMessage() {
-            const input = document.getElementById('user-input');
+            const input = document.getElementById('messageInput');
             const message = input.value.trim();
             if (!message || isTyping) return;
 
@@ -734,6 +836,263 @@
                 `;
             }
         }
+
+        // 初始化录音功能
+        async function initVoiceRecorder() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    audio: {
+                        channelCount: 1,           // 单声道
+                        sampleRate: 16000,         // 采样率 16kHz
+                        sampleSize: 16,            // 采样大小 16bit
+                        echoCancellation: true,    // 回声消除
+                        noiseSuppression: true,    // 噪声抑制
+                        autoGainControl: true      // 自动增益控制
+                    } 
+                });
+                
+                // 创建音频上下文
+                audioContext = new AudioContext({
+                    sampleRate: 16000,  // 设置采样率为16kHz
+                    latencyHint: 'interactive'
+                });
+                
+                // 创建音频源
+                const source = audioContext.createMediaStreamSource(stream);
+                
+                // 创建分析器
+                analyser = audioContext.createAnalyser();
+                analyser.fftSize = 256;
+                source.connect(analyser);
+                
+                dataArray = new Uint8Array(analyser.frequencyBinCount);
+                
+                // 创建 MediaRecorder
+                mediaRecorder = new MediaRecorder(stream, {
+                    mimeType: 'audio/webm;codecs=opus',  // 使用 webm 容器和 opus 编码
+                    audioBitsPerSecond: 256000          // 设置比特率为 256kbps
+                });
+                
+                // 设置录音事件处理
+                mediaRecorder.ondataavailable = (event) => {
+                    audioChunks.push(event.data);
+                };
+                
+                mediaRecorder.onstop = async () => {
+                    // 将 webm 转换为 wav
+                    const webmBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                    const audioContext = new AudioContext({
+                        sampleRate: 16000,  // 设置采样率为16kHz
+                        latencyHint: 'interactive'
+                    });
+                    const audioData = await webmBlob.arrayBuffer();
+                    const audioBuffer = await audioContext.decodeAudioData(audioData);
+                    
+                    // 创建 WAV 文件
+                    const wavBlob = await audioBufferToWav(audioBuffer);
+                    handleAudioData(wavBlob);
+                    audioChunks = [];
+                };
+                
+                console.log('录音功能初始化成功');
+                return true;
+            } catch (error) {
+                console.error('录音功能初始化失败:', error);
+                alert('无法访问麦克风，请确保已授予麦克风访问权限。');
+                return false;
+            }
+        }
+
+        // 将 AudioBuffer 转换为 WAV 格式
+        function audioBufferToWav(buffer) {
+            const numOfChan = 1;  // 单声道
+            const sampleRate = 16000;  // 采样率 16kHz
+            const bitsPerSample = 16;  // 16bit
+            const bytesPerSample = bitsPerSample / 8;  // 2 bytes per sample
+            const blockAlign = numOfChan * bytesPerSample;  // 2 bytes per block
+            const byteRate = sampleRate * blockAlign;  // 32000 bytes per second
+            const length = buffer.length * numOfChan * bytesPerSample;
+            const buffer2 = new ArrayBuffer(44 + length);
+            const view = new DataView(buffer2);
+            const channel = buffer.getChannelData(0);  // 获取第一个声道的数据
+            let offset = 0;
+            let pos = 0;
+
+            // 写入 WAV 文件头
+            setUint32(0x46464952);                         // "RIFF"
+            setUint32(36 + length);                        // 文件长度
+            setUint32(0x45564157);                         // "WAVE"
+            setUint32(0x20746d66);                         // "fmt " chunk
+            setUint32(16);                                 // 长度 = 16
+            setUint16(1);                                  // PCM (uncompressed)
+            setUint16(numOfChan);                          // 声道数
+            setUint32(sampleRate);                         // 采样率 16kHz
+            setUint32(byteRate);                           // 字节率
+            setUint16(blockAlign);                         // 块对齐
+            setUint16(bitsPerSample);                      // 位深度
+            setUint32(0x61746164);                         // "data" - chunk
+            setUint32(length);                             // chunk length
+
+            // 写入音频数据
+            for (let i = 0; i < buffer.length; i++) {
+                const sample = Math.max(-1, Math.min(1, channel[i]));
+                const value = (0.5 + sample < 0 ? sample * 32768 : sample * 32767) | 0;
+                view.setInt16(44 + offset, value, true);
+                offset += 2;
+            }
+
+            function setUint16(data) {
+                view.setUint16(pos, data, true);
+                pos += 2;
+            }
+
+            function setUint32(data) {
+                view.setUint32(pos, data, true);
+                pos += 4;
+            }
+
+            return new Blob([buffer2], { type: 'audio/wav' });
+        }
+
+        // 音频可视化
+        function visualize() {
+            if (!isRecording) return;
+            
+            const canvas = document.getElementById('audioVisualizer');
+            const canvasCtx = canvas.getContext('2d');
+            
+            // 设置canvas尺寸
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width - 16; // 减去padding
+            canvas.height = rect.height - 16;
+            
+            function draw() {
+                animationFrame = requestAnimationFrame(draw);
+                
+                analyser.getByteFrequencyData(dataArray);
+                
+                canvasCtx.fillStyle = 'rgb(255, 255, 255)';
+                canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                const barWidth = (canvas.width / dataArray.length) * 2.5;
+                let barHeight;
+                let x = 0;
+                
+                for (let i = 0; i < dataArray.length; i++) {
+                    barHeight = dataArray[i] / 2;
+                    
+                    canvasCtx.fillStyle = `rgb(37, 99, 235)`;
+                    canvasCtx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+                    
+                    x += barWidth + 1;
+                }
+            }
+            
+            draw();
+        }
+
+        // 处理录音数据
+        async function handleAudioData(audioBlob) {
+            try {
+                console.log('收到音频Blob:', audioBlob);
+                
+                // 创建FormData对象
+                const formData = new FormData();
+                formData.append('audio', audioBlob, 'recording.wav');
+                console.log('FormData准备完毕');
+                
+                // 发送到服务器
+                const response = await fetch('/api/upload_audio', {
+                    method: 'POST',
+                    body: formData
+                });
+                console.log('上传请求已发送');
+                
+                if (!response.ok) {
+                    throw new Error('保存音频失败');
+                }
+                
+                const result = await response.json();
+                console.log('音频处理结果:', result);
+                
+                if (result.error) {
+                    appendMessage('bot', `语音识别失败：${result.error}`);
+                    return;
+                }
+                
+                if (result.recognition_result) {
+                    // 显示识别结果
+                    appendMessage('user', result.recognition_result);
+                    
+                    // 显示AI回复
+                    if (result.response) {
+                        appendMessage('bot', result.response, true);
+                    }
+                }
+                
+            } catch (error) {
+                console.error('处理音频数据失败:', error);
+                appendMessage('bot', '处理音频数据失败，请重试。');
+            }
+        }
+
+        // 添加录音按钮事件监听
+        document.addEventListener('DOMContentLoaded', () => {
+            const voiceButton = document.getElementById('voiceButton');
+            
+            // 移除原有的按住说话事件，改为点击切换
+            voiceButton.addEventListener('click', async () => {
+                if (!mediaRecorder) {
+                    const initialized = await initVoiceRecorder();
+                    if (!initialized) return;
+                }
+                
+                try {
+                    if (!isRecording) {
+                        // 开始录音
+                        audioChunks = [];
+                        mediaRecorder.start();
+                        isRecording = true;
+                        
+                        // 更新UI
+                        voiceButton.classList.add('recording');
+                        document.getElementById('voiceWave').classList.add('recording');
+                        
+                        // 更新按钮提示
+                        voiceButton.title = '点击结束录音';
+                        
+                        // 开始音频可视化
+                        visualize();
+                    } else {
+                        // 停止录音
+                        mediaRecorder.stop();
+                        isRecording = false;
+                        
+                        // 更新UI
+                        voiceButton.classList.remove('recording');
+                        document.getElementById('voiceWave').classList.remove('recording');
+                        
+                        // 更新按钮提示
+                        voiceButton.title = '点击开始录音';
+                        
+                        // 停止音频可视化
+                        cancelAnimationFrame(animationFrame);
+                    }
+                } catch (error) {
+                    console.error('录音操作失败:', error);
+                    alert('录音操作失败，请重试。');
+                }
+            });
+            
+            // 添加键盘快捷键支持（可选）
+            document.addEventListener('keydown', (e) => {
+                // 按空格键切换录音状态
+                if (e.code === 'Space' && !e.repeat) {
+                    e.preventDefault();
+                    voiceButton.click();
+                }
+            });
+        });
     </script>
 </body>
 </html>

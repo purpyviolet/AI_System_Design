@@ -285,7 +285,7 @@ def load_tooth_data():
         
         with open(file_path, 'r', encoding='utf-8') as f:
             data = json.load(f)
-            print(f"成功加载牙科数据: {len(data)} 条记录")
+            # print(f"成功加载牙科数据: {len(data)} 条记录")
             return data
     except Exception as e:
         print(f"加载牙科标签数据失败: {str(e)}")
@@ -366,7 +366,7 @@ def calculate_tooth_score(data):
     
     label = data.get('label', '')
     confidence = float(data.get('confidence', '0').strip('%'))
-    print(label, confidence)
+    # print(label, confidence)
     
     base_score = base_scores.get(label, 70)
     return int(base_score * confidence)
