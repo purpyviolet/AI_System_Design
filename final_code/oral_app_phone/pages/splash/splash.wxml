@@ -1,0 +1,17 @@
+<view class="splash-container" bindtap="goToLogin">
+  <view class="splash-main-row">
+    <image class="splash-logo-img" src="/images/logo2.png" mode="widthFix"></image>
+    <text class="splash-title">ORAL INSIGHT</text>
+  </view>
+  <view class="splash-desc-box">
+    <view class="splash-desc-texts">
+      <view class="splash-desc-cn">
+        更全面、更方便、更准确 <text class="splash-app">@齿语舌观</text>
+      </view>
+      <view class="splash-desc-en">
+        <text class="splash-italic">More comprehensive, more convenient, and more accurate.</text>
+      </view>
+    </view>
+  </view>
+</view>
+ 

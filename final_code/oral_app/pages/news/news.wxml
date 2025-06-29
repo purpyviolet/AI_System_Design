@@ -1,0 +1,37 @@
+<view class="news-container">
+  <!-- 顶部标签栏 -->
+  <view class="tab-bar">
+    <view class="tab {{activeTab === 'tongue' ? 'active' : ''}}" 
+          bindtap="switchTab" 
+          data-tab="tongue">舌诊资讯</view>
+    <view class="tab {{activeTab === 'tooth' ? 'active' : ''}}" 
+          bindtap="switchTab" 
+          data-tab="tooth">牙科资讯</view>
+  </view>
+
+  <!-- 内容列表 -->
+  <scroll-view class="news-list" 
+               scroll-y="true" 
+               enable-back-to-top="true"
+               refresher-enabled="true"
+               bindrefresherrefresh="onPullDownRefresh">
+    <block wx:for="{{newsList[activeTab]}}" wx:key="id">
+      <view class="news-item" bindtap="viewDetail" data-id="{{item.id}}" data-type="{{item.type}}" data-url="{{item.url}}">
+        <image class="news-cover" src="{{item.cover}}" mode="aspectFill"></image>
+        <view class="news-content">
+          <view class="news-title">{{item.title}}</view>
+          <view class="news-desc">{{item.description}}</view>
+          <view class="news-info">
+            <text class="author">{{item.author}}</text>
+            <text class="date">{{item.date}}</text>
+            <text class="views">{{item.views}}次浏览</text>
+          </view>
+          <view class="news-type" wx:if="{{item.type === 'article'}}">
+            <image class="article-icon" src="/images/about-icon.png"></image>
+            <text class="type-text">文章</text>
+          </view>
+        </view>
+      </view>
+    </block>
+  </scroll-view>
+</view> 

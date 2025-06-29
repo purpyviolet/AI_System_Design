@@ -1,0 +1,4 @@
+<view class="container">
+  <image class="history-image" src="/images/history1.png" mode="widthFix"></image>
+  <image class="history-image" src="/images/history2.png" mode="widthFix"></image>
+</view>

@@ -1,0 +1,74 @@
+/* pages/profile/profile.wxss */
+.profile-container {
+  padding: 30rpx;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+}
+
+.user-card {
+  background: linear-gradient(135deg, #4CAF50, #45a049);
+  border-radius: 20rpx;
+  padding: 40rpx;
+  display: flex;
+  align-items: center;
+  margin-bottom: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.1);
+}
+
+.avatar {
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 60rpx;
+  background-color: #fff;
+  margin-right: 30rpx;
+}
+
+.user-info {
+  color: #fff;
+}
+
+.nickname {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 10rpx;
+}
+
+.user-id {
+  font-size: 28rpx;
+  opacity: 0.8;
+}
+
+.function-list {
+  background-color: #fff;
+  border-radius: 20rpx;
+  overflow: hidden;
+}
+
+.function-item {
+  display: flex;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #eee;
+}
+
+.function-item:last-child {
+  border-bottom: none;
+}
+
+.function-icon {
+  width: 40rpx;
+  height: 40rpx;
+  margin-right: 20rpx;
+}
+
+.function-text {
+  flex: 1;
+  font-size: 32rpx;
+  color: #333;
+}
+
+.arrow-icon {
+  width: 32rpx;
+  height: 32rpx;
+  opacity: 0.3;
+} 

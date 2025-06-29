@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>齿语舌观 Oral Insight</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            font-family: "Helvetica Neue", sans-serif;
+            background-color: #f9fafb;
+            min-height: 100vh;
+        }
+
+        .navbar {
+            background-color: #2563eb;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .logo-text .main-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo-text .subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 1rem;
+            color: #2563eb;
+        }
+
+        .feature-title {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #1f2937;
+        }
+
+        .feature-description {
+            color: #6b7280;
+            line-height: 1.5;
+        }
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .welcome-title {
+            font-size: 2.5rem;
+            color: #1f2937;
+            margin-bottom: 1rem;
+        }
+
+        .welcome-subtitle {
+            font-size: 1.25rem;
+            color: #6b7280;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="/" class="logo-container">
+            <img src="/static/logo.png" alt="Logo" class="logo">
+            <div class="logo-text">
+                <span class="main-title">齿语舌观</span>
+                <span class="subtitle">Oral Insight</span>
+            </div>
+        </a>
+        <div class="nav-links">
+            <a href="/" class="nav-link">首页</a>
+            <a href="/chat" class="nav-link">问诊</a>
+            <a href="/history" class="nav-link">历史记录</a>
+            <a href="/analysis" class="nav-link">历史分析</a>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="welcome-section">
+            <h1 class="welcome-title">欢迎使用口腔AI助手</h1>
+            <p class="welcome-subtitle">智能口腔健康管理，让专业医疗触手可及</p>
+        </div>
+
+        <div class="feature-grid">
+            <a href="/chat" class="feature-card">
+                <svg class="feature-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h2 class="feature-title">智能问诊</h2>
+                <p class="feature-description">上传口腔图片，获取专业的AI分析建议，支持舌诊和牙科检查</p>
+            </a>
+
+            <a href="/history" class="feature-card">
+                <svg class="feature-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 8V12L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M3.05 11C3.27 6.61 7.06 3.13 11.5 3C16.19 2.87 20 6.54 20 11.2C20 15.86 16.64 19.55 12 19.95C7.36 20.35 3 16.72 3 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h2 class="feature-title">历史记录</h2>
+                <p class="feature-description">查看历史问诊记录，追踪口腔健康状况变化</p>
+            </a>
+
+            <a href="/analysis" class="feature-card">
+                <svg class="feature-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M3 3V21H21" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M18.5 4.5L7 16L3 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h2 class="feature-title">历史分析</h2>
+                <p class="feature-description">分析历史数据，了解健康趋势，获取专业建议</p>
+            </a>
+        </div>
+        <!-- 相关资讯区块 -->
+        <div id="news-section" style="margin-top: 3rem; background: #fff; border-radius: 1rem; box-shadow: 0 2px 8px rgba(0,0,0,0.04); padding: 2rem;">
+            <h2 style="font-size: 1.5rem; color: #2563eb; margin-bottom: 1.5rem;">相关资讯</h2>
+            <ul id="news-list" style="list-style: none; padding: 0; margin: 0 0 1.5rem 0;"></ul>
+            <button id="load-more-news" style="display: block; margin: 0 auto; padding: 0.5rem 2rem; background: #2563eb; color: #fff; border: none; border-radius: 0.5rem; font-size: 1rem; cursor: pointer;">加载更多</button>
+        </div>
+        <script>
+        let newsData = [];
+        let newsIndex = 0;
+        const pageSize = 3;
+
+        async function fetchNews() {
+            try {
+                const res = await fetch('/api/news');
+                newsData = await res.json();
+                newsIndex = 0;
+                document.getElementById('news-list').innerHTML = '';
+                renderNews();
+            } catch (e) {
+                document.getElementById('news-list').innerHTML = '<li style="color:red;">资讯加载失败，请稍后重试。</li>';
+                document.getElementById('load-more-news').style.display = 'none';
+            }
+        }
+
+        function renderNews() {
+            const list = document.getElementById('news-list');
+            for(let i=0; i<pageSize && newsIndex<newsData.length; i++, newsIndex++) {
+                const item = newsData[newsIndex];
+                const li = document.createElement('li');
+                li.style.marginBottom = '1.2rem';
+                li.innerHTML = `
+                    <div style="display:flex;align-items:flex-start;gap:1.2rem;">
+                        ${item.image ? `<img src="${item.image}" alt="资讯图片" style="width:90px;height:70px;object-fit:cover;border-radius:8px;">` : ''}
+                        <div>
+                            <a href="${item.url}" target="_blank" style="font-weight:bold;color:#2563eb;font-size:1.1rem;text-decoration:none;">${item.title}</a>
+                            <div style='color:#666;font-size:0.98rem;margin-top:0.3rem;'>${item.summary}</div>
+                        </div>
+                    </div>
+                `;
+                list.appendChild(li);
+            }
+            if(newsIndex>=newsData.length) document.getElementById('load-more-news').style.display='none';
+            else document.getElementById('load-more-news').style.display='block';
+        }
+
+        document.getElementById('load-more-news').onclick = renderNews;
+        // 页面加载时自动获取资讯
+        fetchNews();
+        </script>
+    </div>
+</body>
+</html> 

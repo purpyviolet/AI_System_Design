@@ -1,0 +1,5 @@
+<!-- miniprogram/pages/analysis/analysis.wxml -->
+<view class="container">
+  <image class="analysis-image" src="/images/analysis.png" mode="widthFix"></image>
+  <image class="analysis-image" src="/images/analysis1.png" mode="widthFix"></image>
+</view>

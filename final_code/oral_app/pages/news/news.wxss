@@ -1,0 +1,145 @@
+.news-container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+/* 标签栏样式 */
+.tab-bar {
+  display: flex;
+  background-color: #fff;
+  padding: 20rpx 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  font-size: 32rpx;
+  color: #666;
+  position: relative;
+  padding: 20rpx 0;
+}
+
+.tab.active {
+  color: #2563eb;
+  font-weight: bold;
+}
+
+.tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40rpx;
+  height: 4rpx;
+  background-color: #2563eb;
+  border-radius: 2rpx;
+}
+
+/* 新闻列表样式 */
+.news-list {
+  padding: 20rpx;
+}
+
+.news-item {
+  background: #fff;
+  border-radius: 16rpx;
+  margin-bottom: 24rpx;
+  overflow: hidden;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.08);
+  transition: transform 0.2s ease;
+}
+
+.news-item:active {
+  transform: scale(0.98);
+}
+
+.news-cover {
+  width: 100%;
+  height: 320rpx;
+  background: #f5f5f5;
+}
+
+.news-content {
+  padding: 24rpx;
+}
+
+.news-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 12rpx;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.news-desc {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 16rpx;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+}
+
+.news-info {
+  display: flex;
+  align-items: center;
+  gap: 20rpx;
+  margin-bottom: 12rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.author {
+  color: #2563eb;
+  font-weight: 500;
+}
+
+.date {
+  color: #999;
+}
+
+.views {
+  color: #999;
+}
+
+/* 视频类型样式 */
+.news-type {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.play-icon {
+  width: 32rpx;
+  height: 32rpx;
+  margin-right: 8rpx;
+}
+
+.duration {
+  color: #fff;
+  font-size: 24rpx;
+}
+
+/* 文章类型标识 */
+.article-icon {
+  width: 24rpx;
+  height: 24rpx;
+  margin-right: 8rpx;
+}
+
+.type-text {
+  font-size: 22rpx;
+  color: #2563eb;
+  font-weight: 500;
+} 

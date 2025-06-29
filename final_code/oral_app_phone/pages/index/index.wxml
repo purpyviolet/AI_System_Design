@@ -1,0 +1,57 @@
+<view class="qa-container">
+  <!-- 生成报告按钮，仅在有对话时显示 -->
+  <button wx:if="{{messages.length > 0}}" class="generate-report-btn" bindtap="generateReport">生成报告</button>
+  <!-- 对话区 -->
+  <scroll-view class="qa-list" scroll-y="true">
+    <block wx:if="{{messages.length === 0}}">
+      <view class="welcome-empty">
+        <image src="/images/logo.png" class="welcome-logo"></image>
+        <view class="welcome-title">嗨！欢迎来到 <text class="brand">齿语舌观</text></view>
+        <view class="welcome-desc">我可以帮你分析口腔图片、答疑解惑、健康建议，请把你的问题或图片交给我吧~</view>
+      </view>
+    </block>
+    <block wx:for="{{messages}}" wx:key="index">
+      <!-- 只渲染 text 和 image 类型的消息 -->
+      <block wx:if="{{item.type === 'text' || item.type === 'image'}}">
+        <view class="qa-msg-item {{item.role}}">
+          <image class="qa-avatar" src="{{item.role === 'user' ? '/images/user-avatar.png' : '/images/logo.png'}}"></image>
+          <view class="qa-bubble">
+            <image wx:if="{{item.type==='image'}}" class="qa-msg-img" src="{{item.content}}"></image>
+            <text wx:elif="{{item.type==='text'}}">{{item.content}}</text>
+          </view>
+        </view>
+      </block>
+    </block>
+  </scroll-view>
+
+  <!-- 底部输入栏 -->
+  <view class="input-bar-modern">
+    <button class="voice-btn {{isRecording ? 'recording' : ''}}" bindtap="onVoiceInput">
+      <image src="{{isRecording ? '/images/recording-icon.png' : '/images/voice-icon.png'}}" class="voice-icon" />
+    </button>
+    <button class="plus-btn" bindtap="onChooseImage">
+      <image src="/images/plus-icon.png" class="plus-icon" />
+    </button>
+    <input class="modern-input" placeholder="请输入你的问题…" value="{{inputValue}}" bindinput="onInput" />
+    <button class="send-btn-modern" bindtap="onSend">
+      <image src="/images/send-icon.png" class="send-icon" />
+    </button>
+  </view>
+
+  <!-- 智能问诊类型选择弹窗 -->
+  <view wx:if="{{showTypeModal}}" class="chat-type-modal-mask">
+    <view class="chat-type-modal">
+      <view class="chat-type-title">请选择问诊方向</view>
+      <view class="chat-type-btn-group">
+        <view class="chat-type-circle-btn" bindtap="chooseType" data-type="tongue">
+          <image src="/images/tongue-icon.png" class="chat-type-btn-icon"></image>
+          <view>舌诊</view>
+        </view>
+        <view class="chat-type-circle-btn" bindtap="chooseType" data-type="tooth">
+          <image src="/images/tooth-icon.png" class="chat-type-btn-icon"></image>
+          <view>牙齿诊疗</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

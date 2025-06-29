@@ -1,0 +1,44 @@
+{
+  "pages": [
+    "pages/splash/splash",
+    "pages/login/login",
+    "pages/home/home",
+    "pages/analysis/analysis",
+    "pages/index/index",
+    "pages/history/history",
+    "pages/detail/detail",
+    "pages/profile/profile",
+    "pages/news/news",
+    "pages/tutorial/tutorial"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#4CAF50",
+    "navigationBarTitleText": "口腔诊疗助手",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#999",
+    "selectedColor": "#4CAF50",
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "images/logo.png",
+        "selectedIconPath": "images/logo.png"
+      },
+      {
+        "pagePath": "pages/news/news",
+        "text": "资讯",
+        "iconPath": "images/news-icon.png",
+        "selectedIconPath": "images/news-icon-active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "images/profile-icon.png",
+        "selectedIconPath": "images/profile-icon.png"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

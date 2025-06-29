@@ -1,0 +1,40 @@
+<view class="tutorial-container">
+  <!-- 进度指示器 -->
+  <view class="progress-bar">
+    <view class="progress-dots">
+      <view wx:for="{{steps}}" wx:key="index" 
+            class="dot {{currentStep === index ? 'active' : ''}}">
+      </view>
+    </view>
+  </view>
+
+  <!-- 教程内容 -->
+  <view class="tutorial-content">
+    <view class="image-container">
+      <image class="tutorial-image" 
+             src="{{steps[currentStep].image}}" 
+             mode="aspectFit"
+             lazy-load="{{true}}"
+             show-menu-by-longpress="{{true}}"
+             bindload="onImageLoad"
+             binderror="onImageError">
+      </image>
+    </view>
+
+    <view class="tutorial-text">
+      <view class="tutorial-title">{{steps[currentStep].title}}</view>
+      <view class="tutorial-description">{{steps[currentStep].description}}</view>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="tutorial-buttons">
+    <button class="skip-btn" bindtap="skipTutorial">跳过教程</button>
+    <view class="nav-buttons">
+      <button class="nav-btn" bindtap="prevStep" wx:if="{{currentStep > 0}}">上一步</button>
+      <button class="nav-btn primary" bindtap="nextStep">
+        {{currentStep === steps.length - 1 ? '开始使用' : '下一步'}}
+      </button>
+    </view>
+  </view>
+</view> 

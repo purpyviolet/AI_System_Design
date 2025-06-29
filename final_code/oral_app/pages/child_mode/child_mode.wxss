@@ -1,0 +1,15 @@
+.child-mode-container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #f7f9ff, #eef2ff); /* 柔和的背景色 */
+}
+
+.coming-soon-text {
+  font-size: 36rpx;
+  color: #888;
+  text-align: center;
+  padding: 40rpx;
+  line-height: 1.6;
+} 

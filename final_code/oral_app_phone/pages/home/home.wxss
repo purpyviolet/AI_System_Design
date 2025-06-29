@@ -1,0 +1,261 @@
+/* miniprogram/pages/home/home.wxss */
+.home-container {
+  padding: 40rpx;
+  padding-bottom: 120rpx; /* 为底部tabBar留出空间 */
+}
+
+/* 欢迎区域 */
+.welcome-section {
+  text-align: center;
+  margin-bottom: 40rpx; /* 进一步减小底部外边距 */
+}
+
+.welcome-title {
+  font-size: 48rpx;
+  color: #1f2937;
+  margin-bottom: 10rpx;
+  font-weight: bolder; /* 进一步加粗 */
+  letter-spacing: 2rpx; /* 增加字母间距 */
+}
+
+.welcome-subtitle {
+  font-size: 32rpx;
+  color: #4b5563; /* 调整颜色，使其与标题形成对比 */
+  line-height: 1.6;
+  margin-bottom: 30rpx;
+  letter-spacing: 1rpx; /* 增加字母间距 */
+}
+
+/* 功能卡片 */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320rpx, 1fr));
+  gap: 40rpx;
+  margin-bottom: 60rpx;
+}
+
+.feature-card {
+  background-color: white;
+  border-radius: 50rpx;
+  padding: 40rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  display: flex; /* 让卡片内容成为flex容器 */
+  flex-direction: column; /* 垂直排列卡片内容 */
+  align-items: flex-start; /* 内部内容左对齐 */
+}
+
+.feature-card:active {
+  transform: translateY(-8rpx);
+  box-shadow: 0 16rpx 32rpx rgba(0, 0, 0, 0.15);
+  background-color: #f0f7ff;
+}
+
+.feature-icon-description-group {
+  display: flex;
+  align-items: center; /* 垂直居中对齐 */
+  width: 100%;
+  margin-bottom: 15rpx; /* 图标+描述组与标题的间距 */
+}
+
+.feature-icon {
+  width: 100rpx;
+  height: 100rpx;
+  margin-bottom: 0; /* 移除底部外边距 */
+  margin-right: 20rpx; /* 添加右侧外边距 */
+  border-radius: 50%;
+  background-color: #dbeafe;
+  padding: 15rpx;
+  flex-shrink: 0; /* 防止图标缩小 */
+}
+
+.feature-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 0; /* 调整底部外边距，因为间距由 .feature-icon-description-group 控制 */
+  color: #1f2937;
+}
+
+.feature-description {
+  font-size: 28rpx;
+  color: #6b7280;
+  line-height: 1.5;
+  flex-grow: 1;
+  text-align: left;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+  margin-top: 50rpx; /* 往下移动一点 */
+  margin-left: 20rpx; /* 往右边移动一点 */
+}
+
+/* 健康预览容器 */
+.health-preview-container {
+  background-color: #e0f2f7; /* 整体背景色，类似图片中的蓝色 */
+  border-radius: 24rpx;
+  padding: 40rpx 30rpx;
+  margin-top: 60rpx; /* 与上方内容保持距离 */
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.08);
+}
+
+.preview-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 50rpx;
+}
+
+.preview-title {
+  font-size: 38rpx;
+  font-weight: bold;
+  color: #3f51b5; /* 健康预览标题颜色 */
+}
+
+.view-more-btn {
+  background-color: #42a5f5; /* 按钮背景色 */
+  color: #fff;
+  font-size: 26rpx;
+  padding: 12rpx 24rpx;
+  border-radius: 30rpx;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+
+/* 预览卡片网格 */
+.preview-cards-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 两列布局 */
+  gap: 30rpx;
+  margin-bottom: 40rpx;
+}
+
+/* 单个预览卡片 */
+.preview-card {
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  text-align: center;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.card-status-title {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+.card-status-text {
+  font-size: 34rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+}
+
+.status-tag {
+  display: inline-block;
+  padding: 8rpx 20rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 20rpx;
+}
+
+.status-tag.orange {
+  background-color: #ff9800;
+}
+
+.status-tag.red {
+  background-color: #f44336;
+}
+
+.progress-bar-container {
+  height: 8rpx;
+  background-color: #e0e0e0;
+  border-radius: 4rpx;
+  overflow: hidden;
+  margin: 0 auto;
+  width: 80%; /* 进度条宽度 */
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: 4rpx;
+}
+
+/* 建议区域 */
+.suggestions-section {
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.suggestions-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 30rpx;
+}
+
+.suggestion-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #eee;
+}
+
+.suggestion-item:last-child {
+  border-bottom: none;
+}
+
+.suggestion-text {
+  font-size: 30rpx;
+  color: #555;
+}
+
+.suggestion-progress {
+  font-size: 28rpx;
+  color: #999;
+}
+
+.tutorial-btn {
+  margin-top: 10rpx;
+  background: linear-gradient(to right, #4c8bf5, #2c6be0);
+  color: white;
+  font-size: 32rpx;
+  padding: 22rpx 44rpx;
+  border-radius: 40rpx;
+  border: none;
+  box-shadow: 0 10rpx 25rpx rgba(37, 99, 235, 0.45);
+  font-weight: 900;
+  letter-spacing: 2rpx;
+  text-shadow: 1rpx 2rpx 3rpx rgba(0, 0, 0, 0.4); /* 调整文字阴影，使其更明显 */
+}
+
+.tutorial-btn:active {
+  transform: translateY(2rpx);
+  box-shadow: 0 5rpx 15rpx rgba(37, 99, 235, 0.3);
+}
+
+/* 拍照示例与教学区块样式 */
+/* 已删除相关样式 */
+
+.health-preview-image-wrap {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 40rpx 0;
+}
+
+.health-preview-image {
+  max-width: 90vw;
+  display: block;
+  border-radius: 24rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0,0,0,0.08);
+}

@@ -1,0 +1,23 @@
+<view class="container">
+  <view class="login-box">
+    <image class="logo" src="/images/logo.png" mode="aspectFit"></image>
+    <view class="title">欢迎来到齿语舌观！</view>
+    
+    <view class="tab-container">
+      <view class="tab {{activeTab === 'login' ? 'active' : ''}}" bindtap="switchTab" data-tab="login">登录</view>
+      <view class="tab {{activeTab === 'register' ? 'active' : ''}}" bindtap="switchTab" data-tab="register">注册</view>
+    </view>
+
+    <view class="input-group">
+      <input type="text" placeholder="请输入用户名" bindinput="onUsernameInput" value="{{username}}" />
+    </view>
+    <view class="input-group">
+      <input type="password" placeholder="请输入密码" bindinput="onPasswordInput" value="{{password}}" />
+    </view>
+    <view class="input-group" wx:if="{{activeTab === 'register'}}">
+      <input type="password" placeholder="请确认密码" bindinput="onConfirmPasswordInput" value="{{confirmPassword}}" />
+    </view>
+    
+    <button class="submit-btn" bindtap="handleSubmit" hover-class="button-hover">{{activeTab === 'login' ? '登录' : '注册'}}</button>
+  </view>
+</view>

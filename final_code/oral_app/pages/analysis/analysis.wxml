@@ -1,0 +1,72 @@
+<!-- miniprogram/pages/analysis/analysis.wxml -->
+<view class="container">
+  <!-- 时间范围选择器 -->
+  <view class="time-range-selector">
+    <text>时间范围：</text>
+    <button 
+      wx:for="{{timeRanges}}" 
+      wx:key="value"
+      class="time-range-btn {{activeRange === item.value ? 'active' : ''}}"
+      bindtap="changeTimeRange"
+      data-range="{{item.value}}"
+    >
+      {{item.label}}
+    </button>
+  </view>
+
+  <!-- 舌诊分析部分 -->
+  <view class="analysis-section">
+    <view class="section-title">舌诊分析</view>
+    
+    <view class="chart-grid">
+      <view class="chart-container">
+        <ec-canvas id="tongue-overall-chart" canvas-id="tongue-overall-chart"></ec-canvas>
+      </view>
+      <view class="chart-container">
+        <ec-canvas id="tongue-dimensions-chart" canvas-id="tongue-dimensions-chart"></ec-canvas>
+      </view>
+    </view>
+    
+    <view class="chart-grid">
+      <view class="chart-container">
+        <ec-canvas id="tongue-frequency-chart" canvas-id="tongue-frequency-chart"></ec-canvas>
+      </view>
+      <view class="chart-container">
+        <ec-canvas id="tongue-prediction-chart" canvas-id="tongue-prediction-chart"></ec-canvas>
+      </view>
+    </view>
+    
+    <view class="summary-section">
+      <view class="summary-title">分析总结</view>
+      <view class="summary-content">{{tongueSummary}}</view>
+    </view>
+  </view>
+
+  <!-- 牙科分析部分 -->
+  <view class="analysis-section">
+    <view class="section-title">牙科分析</view>
+    
+    <view class="chart-grid">
+      <view class="chart-container">
+        <ec-canvas id="tooth-overall-chart" canvas-id="tooth-overall-chart"></ec-canvas>
+      </view>
+      <view class="chart-container">
+        <ec-canvas id="tooth-distribution-chart" canvas-id="tooth-distribution-chart"></ec-canvas>
+      </view>
+    </view>
+    
+    <view class="chart-grid">
+      <view class="chart-container">
+        <ec-canvas id="tooth-frequency-chart" canvas-id="tooth-frequency-chart"></ec-canvas>
+      </view>
+      <view class="chart-container">
+        <ec-canvas id="tooth-prediction-chart" canvas-id="tooth-prediction-chart"></ec-canvas>
+      </view>
+    </view>
+    
+    <view class="summary-section">
+      <view class="summary-title">分析总结</view>
+      <view class="summary-content">{{toothSummary}}</view>
+    </view>
+  </view>
+</view>

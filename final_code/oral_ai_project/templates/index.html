@@ -1,0 +1,1200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>齿语舌观 Oral Insight</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            font-family: "Helvetica Neue", sans-serif;
+            background-color: #f9fafb;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .navbar {
+            background-color: #2563eb;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            text-decoration: none;
+            color: white;
+        }
+
+        .logo {
+            width: 48px;
+            height: 48px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .logo-text .main-title {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .logo-text .subtitle {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 0.5rem;
+            transition: background-color 0.2s;
+        }
+
+        .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            height: 100%;
+        }
+
+        .sidebar {
+            width: 260px;
+            background-color: #ffffff;
+            border-right: 1px solid #e5e7eb;
+            padding: 1rem;
+        }
+
+        .chat-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 1rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+            background-color: #f3f4f6;
+            border-radius: 8px;
+        }
+
+        .message-wrapper {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+            gap: 8px;
+        }
+
+        .message-wrapper.user {
+            flex-direction: row-reverse;
+        }
+
+        .bubble {
+            padding: 0.75rem 1rem;
+            border-radius: 1rem;
+            max-width: 75%;
+        }
+
+        .user .bubble {
+            background-color: #2563eb;
+            color: white;
+        }
+
+        .bot .bubble {
+            background-color: #e5e7eb;
+            color: black;
+        }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+        .message-content {
+            flex: 1;
+        }
+
+        .typing-indicator {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-left: 8px;
+            position: relative;
+        }
+
+        .typing-indicator span {
+            display: block;
+            width: 4px;
+            height: 4px;
+            background-color: #6b7280;
+            border-radius: 50%;
+            position: absolute;
+            animation: typing 1s infinite;
+        }
+
+        .typing-indicator span:nth-child(1) {
+            left: 0;
+            animation-delay: 0s;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            left: 8px;
+            animation-delay: 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            left: 16px;
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-4px);
+            }
+        }
+
+        .input-box {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding: 1rem;
+            background-color: #ffffff;
+            border-top: 1px solid #e5e7eb;
+            position: relative;
+        }
+
+        .input-container {
+            flex: 1;
+            max-width: 800px;
+            margin: 0 auto;
+            width: 100%;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 0.75rem 3rem 0.75rem 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.75rem;
+            resize: none;
+            min-height: 24px;
+            max-height: 200px;
+            font-family: inherit;
+            font-size: 1rem;
+            line-height: 1.5;
+            outline: none;
+            transition: border-color 0.2s;
+            box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+        }
+
+        textarea:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+        }
+
+        .send-button {
+            position: absolute;
+            right: 0.5rem;
+            bottom: 0.5rem;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 36px;
+            width: 36px;
+            z-index: 10;
+        }
+
+        .send-button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .send-button:disabled {
+            background-color: #93c5fd;
+            cursor: not-allowed;
+        }
+
+        .generate-report-btn {
+            position: absolute;
+            right: -120px;
+            top: 1rem;
+            background-color: #10b981;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: none;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            height: 36px;
+            white-space: nowrap;
+            z-index: 10;
+        }
+
+        .generate-report-btn:hover {
+            background-color: #059669;
+        }
+
+        .generate-report-btn:disabled {
+            background-color: #6ee7b7;
+            cursor: not-allowed;
+        }
+
+        .generate-report-btn svg {
+            width: 16px;
+            height: 16px;
+            flex-shrink: 0;
+        }
+
+        .upload-area {
+            border: 2px dashed #e5e7eb;
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.2s;
+            cursor: pointer;
+            margin-bottom: 1rem;
+        }
+
+        .upload-area:hover, .upload-area.dragover {
+            border-color: #2563eb;
+            background-color: rgba(37, 99, 235, 0.05);
+        }
+
+        .upload-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 0.75rem;
+            color: #6b7280;
+        }
+
+        .upload-text {
+            color: #6b7280;
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-hint {
+            font-size: 0.875rem;
+            color: #9ca3af;
+        }
+
+        .check-type-select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .check-type-select:focus {
+            border-color: #2563eb;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .upload-progress {
+            display: none;
+            margin-top: 1rem;
+            padding: 0.75rem;
+            background-color: #f3f4f6;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            color: #4b5563;
+        }
+
+        .voice-button {
+            position: absolute;
+            right: 3rem;
+            bottom: 0.5rem;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            padding: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 36px;
+            width: 36px;
+            z-index: 10;
+        }
+
+        .voice-button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .voice-button.recording {
+            background-color: #dc2626;
+            animation: pulse 1.5s infinite;
+        }
+
+        .voice-button.recording:hover {
+            background-color: #b91c1c;
+        }
+
+        .voice-wave {
+            position: absolute;
+            right: 3rem;
+            bottom: 3.5rem;
+            width: 200px;
+            height: 60px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: none;
+            padding: 8px;
+            z-index: 1000;
+        }
+
+        .voice-wave.recording {
+            display: block;
+        }
+
+        .voice-wave canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .input-container textarea {
+            padding-right: 5rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <a href="/" class="logo-container">
+            <img src="/static/logo.png" alt="Logo" class="logo">
+            <div class="logo-text">
+                <span class="main-title">齿语舌观</span>
+                <span class="subtitle">Oral Insight</span>
+            </div>
+        </a>
+        <div class="nav-links">
+            <a href="/" class="nav-link">首页</a>
+            <a href="/chat" class="nav-link">问诊</a>
+            <a href="/history" class="nav-link">历史记录</a>
+            <a href="/analysis" class="nav-link">历史分析</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="sidebar">
+            <form id="upload-form">
+                <select name="check_type" class="check-type-select">
+                    <option value="tongue">舌头</option>
+                    <option value="tooth">牙齿</option>
+                </select>
+
+                <div class="upload-area" id="upload-area">
+                    <svg class="upload-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M21 15V19C21 19.5304 20.7893 20.0391 20.4142 20.4142C20.0391 20.7893 19.5304 21 19 21H5C4.46957 21 3.96086 20.7893 3.58579 20.4142C3.21071 20.0391 3 19.5304 3 19V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M17 8L12 3L7 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M12 3V15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <div class="upload-text">拖拽文件到这里或点击上传</div>
+                    <div class="upload-hint">支持 jpg、png 格式</div>
+                    <input type="file" name="image" class="file-input" id="file-input" accept="image/jpeg,image/png" required>
+                </div>
+
+                <div class="upload-progress" id="upload-progress"></div>
+            </form>
+        </div>
+
+        <div class="chat-area">
+            <!-- 欢迎区块：无对话时显示，有对话时隐藏 -->
+            <div id="welcome-section" style="display: flex; flex-direction: column; align-items: center; justify-content: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; color: #333; z-index: 2;">
+                <img src="/static/logo.png" alt="Oral Insight" style="width: 120px; margin-bottom: 24px;">
+                <div style="font-size: 2rem; font-weight: bold; margin-bottom: 12px;">嗨！欢迎来到 <span style="color: #2563eb;">齿语舌观</span></div>
+                <div style="font-size: 1.1rem; color: #666; text-align: center;">我可以帮你分析口腔图片、答疑解惑、健康建议，请把你的问题或图片交给我吧~</div>
+            </div>
+            <div class="messages" id="messages"></div>
+            <div class="input-box">
+                <button id="clear-chat-btn" style="margin-right: 0.8rem; background: #f3f4f6; color: #2563eb; border: none; border-radius: 0.7rem; font-size: 1rem; cursor: pointer; padding: 0.5rem 1.1rem; align-self: flex-end;">清空对话</button>
+                <div class="input-container">
+                    <textarea id="messageInput" placeholder="输入消息..." rows="1"></textarea>
+                    <button class="voice-button" id="voiceButton" title="点击开始录音">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                            <line x1="12" y1="19" x2="12" y2="23"></line>
+                            <line x1="8" y1="23" x2="16" y2="23"></line>
+                        </svg>
+                    </button>
+                    <button class="generate-report-btn" id="generate-report-btn" style="display: none;" onclick="generateReport()">
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 13H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M16 17H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M10 9H9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        生成报告
+                    </button>
+                    <button class="send-button" id="sendButton" disabled>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13"></line>
+                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                        </svg>
+                    </button>
+                </div>
+                <div class="voice-wave" id="voiceWave">
+                    <canvas id="audioVisualizer"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const messages = document.getElementById('messages');
+        const welcomeSection = document.getElementById('welcome-section');
+        let isTyping = false;
+        let chatHistory = [];
+
+        // 录音相关变量
+        let mediaRecorder = null;
+        let audioChunks = [];
+        let isRecording = false;
+        let audioContext = null;
+        let analyser = null;
+        let dataArray = null;
+        let animationFrame = null;
+
+        function formatMessage(text) {
+            // 处理换行符
+            text = text.replace(/\n/g, '<br>');
+            
+            // 处理分点作答（数字编号）
+            text = text.replace(/(\d+\.\s.*?)(?=\n|$)/g, '<div style="margin-left: 20px;">$1</div>');
+            
+            // 处理分点作答（短横线）
+            text = text.replace(/(-\s.*?)(?=\n|$)/g, '<div style="margin-left: 20px;">$1</div>');
+            
+            return text;
+        }
+
+        function appendMessage(role, text, isTypingEffect = false, isStreaming = false) {
+            const wrapper = document.createElement('div');
+            wrapper.className = `message-wrapper ${role}`;
+            
+            const avatar = document.createElement('img');
+            avatar.className = 'avatar';
+            avatar.src = role === 'user' ? '/static/user-avatar.png' : '/static/logo.png';
+            avatar.alt = role === 'user' ? '用户头像' : 'AI助手头像';
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            
+            const content = document.createElement('div');
+            content.className = 'message-content';
+            
+            if (isStreaming && role === 'bot') {
+                const typingIndicator = document.createElement('div');
+                typingIndicator.className = 'typing-indicator';
+                typingIndicator.innerHTML = '<span></span><span></span><span></span>';
+                content.appendChild(typingIndicator);
+            }
+            else {
+                content.innerHTML = formatMessage(text);
+            }
+            
+            bubble.appendChild(content);
+            wrapper.appendChild(avatar);
+            wrapper.appendChild(bubble);
+            messages.appendChild(wrapper);
+            messages.scrollTop = messages.scrollHeight;
+            
+            // 为流式响应预先创建历史记录占位符
+            const apiRole = role === 'bot' ? 'assistant' : role;
+            if (isStreaming) {
+                chatHistory.push({ role: apiRole, content: '' });
+            } else {
+                 // 正常添加历史记录
+            chatHistory.push({
+                    role: apiRole,
+                content: text
+            });
+            }
+
+            // 如果是AI回复，显示生成报告按钮
+            if (role === 'bot') {
+                const generateReportBtn = document.getElementById('generate-report-btn');
+                if (generateReportBtn) {
+                    generateReportBtn.style.display = 'flex';
+                }
+            }
+            updateWelcomeSection();
+
+            return content; // 返回内容元素，用于流式更新
+        }
+
+        document.getElementById('upload-form').addEventListener('submit', async function (e) {
+            e.preventDefault();
+            const formData = new FormData(this);
+
+            // 获取图片文件名
+            const fileInput = document.querySelector('input[name="image"]');
+            const filename = fileInput.files[0].name;
+
+            appendImage('user', `/uploads/${filename}`);
+            appendMessage('user', '已上传图片，正在分析…');
+
+            const response = await fetch('/upload_image', {
+                method: 'POST',
+                body: formData
+            });
+
+            const result = await response.json();
+            appendMessage('bot', result.response);
+        });
+        
+        function appendImage(role, src) {
+            const wrapper = document.createElement('div');
+            wrapper.className = `message-wrapper ${role}`;
+
+            const avatar = document.createElement('img');
+            avatar.className = 'avatar';
+            avatar.src = role === 'user' ? '/static/user-avatar.png' : '/static/logo.png';
+            avatar.alt = role === 'user' ? '用户头像' : 'AI助手头像';
+
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+
+            const content = document.createElement('div');
+            content.className = 'message-content';
+
+            const img = document.createElement('img');
+            img.src = src;
+            img.alt = "上传的图片";
+            img.style.maxWidth = '200px';
+            img.style.borderRadius = '12px';
+
+            content.appendChild(img);
+            bubble.appendChild(content);
+            wrapper.appendChild(avatar);
+            wrapper.appendChild(bubble);
+            messages.appendChild(wrapper);
+            messages.scrollTop = messages.scrollHeight;
+            updateWelcomeSection();
+        }
+
+        // 发送按钮事件绑定
+        const sendButton = document.getElementById('sendButton');
+        sendButton.addEventListener('click', function(e) {
+            e.preventDefault();
+            sendMessage();
+        });
+        // 输入框内容变化时，控制发送按钮可用状态
+        const textarea = document.getElementById('messageInput');
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = (this.scrollHeight) + 'px';
+            sendButton.disabled = !this.value.trim();
+        });
+
+        // 添加回车发送功能（Shift+Enter换行）
+        textarea.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                sendMessage();
+            }
+        });
+
+        // 拖拽上传相关功能
+        const uploadArea = document.getElementById('upload-area');
+        const fileInput = document.getElementById('file-input');
+        const uploadProgress = document.getElementById('upload-progress');
+        const uploadForm = document.getElementById('upload-form');
+
+        // 点击上传区域触发文件选择
+        uploadArea.addEventListener('click', () => {
+            fileInput.click();
+        });
+
+        // 处理拖拽事件
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight(e) {
+            uploadArea.classList.add('dragover');
+        }
+
+        function unhighlight(e) {
+            uploadArea.classList.remove('dragover');
+        }
+
+        // 处理文件拖放
+        uploadArea.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            handleFiles(files);
+        }
+
+        // 处理文件选择
+        fileInput.addEventListener('change', function() {
+            handleFiles(this.files);
+        });
+
+        function handleFiles(files) {
+            if (files.length > 0) {
+                const file = files[0];
+                if (file.type.match('image.*')) {
+                    uploadFile(file);
+                } else {
+                    alert('请上传图片文件！');
+                }
+            }
+        }
+
+        async function uploadFile(file) {
+            const formData = new FormData();
+            formData.append('image', file);
+            const checkType = document.querySelector('select[name="check_type"]').value;
+            formData.append('check_type', checkType);
+            console.log("上传图片，检查类型:", checkType);
+
+            // 立即显示上传的图片和状态
+            appendImage('user', URL.createObjectURL(file));
+            // 为图片上传的初始提问也创建一个历史占位符
+            appendMessage('user', '已上传图片，请进行分析。');
+
+            isTyping = true;
+            const botMessageContent = appendMessage('bot', '', false, true);
+            let fullResponse = '';
+
+            try {
+                // 注意：/upload_image 接口不是流式的，它是一次性返回的
+                // 我们需要一个流式的初始分析接口，或者在这里模拟流式
+                const response = await fetch('/upload_image', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const result = await response.json();
+                
+                if (result.error) {
+                    fullResponse = `分析失败：${result.error}`;
+                } else {
+                    fullResponse = result.response;
+                    
+                    // 将图片分析结果保存到另一条历史记录中，以便生成报告
+                    const analysisResult = {
+                        type: 'image_analysis',
+                        result: {
+                            check_type: checkType,
+                            // 牙齿或舌诊的分析结果
+                            ...(checkType === 'tooth' ? {
+                                label: result.label,
+                                confidence: result.confidence
+                            } : {
+                                tongue_color: result.tongue_color,
+                                coating_color: result.coating_color,
+                                thickness: result.thickness,
+                                rot_greasy: result.rot_greasy
+                            }),
+                            filename: result.filename // 新增，便于后端拼接图片地址
+                        },
+                        filename: result.filename, // 新增，便于后端直接获取
+                        image_url: `/static/uploads/${result.filename}` // 保持兼容
+                    };
+                    chatHistory.push(analysisResult);
+                }
+            } catch (error) {
+                console.error('Upload error:', error);
+                fullResponse = '上传或分析失败，请重试';
+            } finally {
+                 // 更新UI和历史记录
+                botMessageContent.innerHTML = formatMessage(fullResponse);
+                chatHistory[chatHistory.length - 1].content = fullResponse;
+                isTyping = false;
+                const typingIndicator = botMessageContent.querySelector('.typing-indicator');
+                if(typingIndicator) typingIndicator.remove();
+            }
+        }
+
+        async function generateReport() {
+            const button = document.getElementById('generate-report-btn');
+            button.disabled = true;
+            button.innerHTML = '<svg class="animate-spin" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> 生成中...';
+
+            try {
+                console.log("准备发送历史记录:", chatHistory);
+                const response = await fetch('/generate_report', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        history: chatHistory
+                    })
+                });
+
+                if (response.ok) {
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `就诊记录报告_${new Date().toISOString().split('T')[0]}.pdf`;
+                    document.body.appendChild(a);
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                    document.body.removeChild(a);
+                } else {
+                    const errorData = await response.json();
+                    console.error("生成报告失败:", errorData);
+                    throw new Error(errorData.error || '生成报告失败');
+                }
+            } catch (error) {
+                console.error('生成报告失败:', error);
+                appendMessage('bot', `生成报告失败：${error.message}`);
+            } finally {
+                button.disabled = false;
+                button.innerHTML = `
+                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M14 2V8H20" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M16 13H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M16 17H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M10 9H9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    生成报告
+                `;
+            }
+        }
+
+        // 初始化录音功能
+        async function initVoiceRecorder() {
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    audio: {
+                        channelCount: 1,           // 单声道
+                        sampleRate: 16000,         // 采样率 16kHz
+                        sampleSize: 16,            // 采样大小 16bit
+                        echoCancellation: true,    // 回声消除
+                        noiseSuppression: true,    // 噪声抑制
+                        autoGainControl: true      // 自动增益控制
+                    } 
+                });
+                
+                // 创建音频上下文
+                audioContext = new AudioContext({
+                    sampleRate: 16000,  // 设置采样率为16kHz
+                    latencyHint: 'interactive'
+                });
+                
+                // 创建音频源
+                const source = audioContext.createMediaStreamSource(stream);
+                
+                // 创建分析器
+                analyser = audioContext.createAnalyser();
+                analyser.fftSize = 256;
+                source.connect(analyser);
+                
+                dataArray = new Uint8Array(analyser.frequencyBinCount);
+                
+                // 创建 MediaRecorder
+                mediaRecorder = new MediaRecorder(stream, {
+                    mimeType: 'audio/webm;codecs=opus',  // 使用 webm 容器和 opus 编码
+                    audioBitsPerSecond: 256000          // 设置比特率为 256kbps
+                });
+                
+                // 设置录音事件处理
+                mediaRecorder.ondataavailable = (event) => {
+                    audioChunks.push(event.data);
+                };
+                
+                mediaRecorder.onstop = async () => {
+                    // 将 webm 转换为 wav
+                    const webmBlob = new Blob(audioChunks, { type: 'audio/webm' });
+                    const audioContext = new AudioContext({
+                        sampleRate: 16000,  // 设置采样率为16kHz
+                        latencyHint: 'interactive'
+                    });
+                    const audioData = await webmBlob.arrayBuffer();
+                    const audioBuffer = await audioContext.decodeAudioData(audioData);
+                    
+                    // 创建 WAV 文件
+                    const wavBlob = await audioBufferToWav(audioBuffer);
+                    handleAudioData(wavBlob);
+                    audioChunks = [];
+                };
+                
+                console.log('录音功能初始化成功');
+                return true;
+            } catch (error) {
+                console.error('录音功能初始化失败:', error);
+                alert('无法访问麦克风，请确保已授予麦克风访问权限。');
+                return false;
+            }
+        }
+
+        // 将 AudioBuffer 转换为 WAV 格式
+        function audioBufferToWav(buffer) {
+            const numOfChan = 1;  // 单声道
+            const sampleRate = 16000;  // 采样率 16kHz
+            const bitsPerSample = 16;  // 16bit
+            const bytesPerSample = bitsPerSample / 8;  // 2 bytes per sample
+            const blockAlign = numOfChan * bytesPerSample;  // 2 bytes per block
+            const byteRate = sampleRate * blockAlign;  // 32000 bytes per second
+            const length = buffer.length * numOfChan * bytesPerSample;
+            const buffer2 = new ArrayBuffer(44 + length);
+            const view = new DataView(buffer2);
+            const channel = buffer.getChannelData(0);  // 获取第一个声道的数据
+            let offset = 0;
+            let pos = 0;
+
+            // 写入 WAV 文件头
+            setUint32(0x46464952);                         // "RIFF"
+            setUint32(36 + length);                        // 文件长度
+            setUint32(0x45564157);                         // "WAVE"
+            setUint32(0x20746d66);                         // "fmt " chunk
+            setUint32(16);                                 // 长度 = 16
+            setUint16(1);                                  // PCM (uncompressed)
+            setUint16(numOfChan);                          // 声道数
+            setUint32(sampleRate);                         // 采样率 16kHz
+            setUint32(byteRate);                           // 字节率
+            setUint16(blockAlign);                         // 块对齐
+            setUint16(bitsPerSample);                      // 位深度
+            setUint32(0x61746164);                         // "data" - chunk
+            setUint32(length);                             // chunk length
+
+            // 写入音频数据
+            for (let i = 0; i < buffer.length; i++) {
+                const sample = Math.max(-1, Math.min(1, channel[i]));
+                const value = (0.5 + sample < 0 ? sample * 32768 : sample * 32767) | 0;
+                view.setInt16(44 + offset, value, true);
+                offset += 2;
+            }
+
+            function setUint16(data) {
+                view.setUint16(pos, data, true);
+                pos += 2;
+            }
+
+            function setUint32(data) {
+                view.setUint32(pos, data, true);
+                pos += 4;
+            }
+
+            return new Blob([buffer2], { type: 'audio/wav' });
+        }
+
+        // 音频可视化
+        function visualize() {
+            if (!isRecording) return;
+            
+            const canvas = document.getElementById('audioVisualizer');
+            const canvasCtx = canvas.getContext('2d');
+            
+            // 设置canvas尺寸
+            const rect = canvas.parentElement.getBoundingClientRect();
+            canvas.width = rect.width - 16; // 减去padding
+            canvas.height = rect.height - 16;
+            
+            function draw() {
+                animationFrame = requestAnimationFrame(draw);
+                
+                analyser.getByteFrequencyData(dataArray);
+                
+                canvasCtx.fillStyle = 'rgb(255, 255, 255)';
+                canvasCtx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                const barWidth = (canvas.width / dataArray.length) * 2.5;
+                let barHeight;
+                let x = 0;
+                
+                for (let i = 0; i < dataArray.length; i++) {
+                    barHeight = dataArray[i] / 2;
+                    
+                    canvasCtx.fillStyle = `rgb(37, 99, 235)`;
+                    canvasCtx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
+                    
+                    x += barWidth + 1;
+                }
+            }
+            
+            draw();
+        }
+
+        // 处理录音数据
+        async function handleAudioData(audioBlob) {
+            try {
+                console.log('收到音频Blob:', audioBlob);
+                
+                // 创建FormData对象
+                const formData = new FormData();
+                formData.append('audio', audioBlob, 'recording.wav');
+                console.log('FormData准备完毕');
+                
+                // 发送到服务器
+                const response = await fetch('/api/upload_audio', {
+                    method: 'POST',
+                    body: formData
+                });
+                console.log('上传请求已发送');
+                
+                if (!response.ok) {
+                    throw new Error('保存音频失败');
+                }
+                
+                const result = await response.json();
+                console.log('音频处理结果:', result);
+                
+                if (result.error) {
+                    appendMessage('bot', `语音识别失败：${result.error}`);
+                    return;
+                }
+                
+                if (result.recognition_result) {
+                    // 显示识别结果
+                    appendMessage('user', result.recognition_result);
+                    
+                    // 显示AI回复
+                    if (result.response) {
+                        appendMessage('bot', result.response, true);
+                    }
+                }
+                
+            } catch (error) {
+                console.error('处理音频数据失败:', error);
+                appendMessage('bot', '处理音频数据失败，请重试。');
+            }
+        }
+
+        // 添加录音按钮事件监听
+        document.addEventListener('DOMContentLoaded', () => {
+            const voiceButton = document.getElementById('voiceButton');
+            
+            // 移除原有的按住说话事件，改为点击切换
+            voiceButton.addEventListener('click', async () => {
+                if (!mediaRecorder) {
+                    const initialized = await initVoiceRecorder();
+                    if (!initialized) return;
+                }
+                
+                try {
+                    if (!isRecording) {
+                        // 开始录音
+                        audioChunks = [];
+                        mediaRecorder.start();
+                        isRecording = true;
+                        
+                        // 更新UI
+                        voiceButton.classList.add('recording');
+                        document.getElementById('voiceWave').classList.add('recording');
+                        
+                        // 更新按钮提示
+                        voiceButton.title = '点击结束录音';
+                        
+                        // 开始音频可视化
+                        visualize();
+                    } else {
+                        // 停止录音
+                        mediaRecorder.stop();
+                        isRecording = false;
+                        
+                        // 更新UI
+                        voiceButton.classList.remove('recording');
+                        document.getElementById('voiceWave').classList.remove('recording');
+                        
+                        // 更新按钮提示
+                        voiceButton.title = '点击开始录音';
+                        
+                        // 停止音频可视化
+                        cancelAnimationFrame(animationFrame);
+                    }
+                } catch (error) {
+                    console.error('录音操作失败:', error);
+                    alert('录音操作失败，请重试。');
+                }
+            });
+        });
+
+        // 检查并切换欢迎区块显示
+        function updateWelcomeSection() {
+            // 判断消息区是否有内容
+            if (messages && messages.children.length > 0) {
+                welcomeSection.style.display = 'none';
+            } else {
+                welcomeSection.style.display = 'flex';
+            }
+        }
+
+        // 页面加载时初始化欢迎区块
+        document.addEventListener('DOMContentLoaded', updateWelcomeSection);
+
+        // sendMessage函数定义，确保在事件绑定前可用
+        async function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            if (!message || isTyping) return;
+
+            appendMessage('user', message);
+            input.value = '';
+            input.style.height = 'auto';
+            sendButton.disabled = true;
+
+            // 准备API请求的聊天记录，并过滤掉非对话内容（如图片分析结果对象）
+            const historyForApi = chatHistory.slice(0, -1).filter(item => item.role && item.content);
+            // === 这里插入调试代码 ===
+            console.log('message:', message);
+            console.log('historyForApi:', historyForApi);
+            console.log('stringify:', JSON.stringify({ message, history: historyForApi }));
+            // =====================
+            isTyping = true;
+
+            // 创建一个空的bot消息气泡用于填充流式响应
+            const botMessageContent = appendMessage('bot', '', false, true);
+            let fullResponse = '';
+
+            try {
+            const response = await fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: message, history: historyForApi })
+                    //body: JSON.stringify({ message })
+            });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+
+                while (true) {
+                    const { value, done } = await reader.read();
+                    if (done) break;
+                    
+                    const chunk = decoder.decode(value, { stream: true });
+                    console.log('chunk:', chunk);
+                    fullResponse += chunk;
+                    botMessageContent.innerHTML = formatMessage(fullResponse);
+                    messages.scrollTop = messages.scrollHeight;
+                }
+                console.log('最终fullResponse:', fullResponse);
+                
+                // 更新完整历史记录
+                chatHistory[chatHistory.length - 1].content = fullResponse;
+
+                // 新增：递归提取response内容，避免输出{response: ...}格式
+                let responseText = extractResponseText(fullResponse);
+                responseText = decodeUnicode(responseText);
+                botMessageContent.innerHTML = formatMessage(responseText);
+
+            } catch (error) {
+                botMessageContent.innerHTML = "对话时遇到错误，请重试。";
+                console.error("Streaming error:", error);
+            } finally {
+                isTyping = false;
+                // 移除打字指示器（如果还存在）
+                const typingIndicator = botMessageContent.querySelector('.typing-indicator');
+                if(typingIndicator) typingIndicator.remove();
+            }
+        }
+
+        // 新增：递归提取response内容，避免输出{response: ...}格式
+        function extractResponseText(str) {
+            let result = str;
+            while (true) {
+                try {
+                    const obj = JSON.parse(result);
+                    if (typeof obj === 'object' && obj.response) {
+                        result = obj.response;
+                    } else {
+                        break;
+                    }
+                } catch (e) {
+                    break;
+                }
+            }
+            return result;
+        }
+
+        // 新增：Unicode解码函数
+        function decodeUnicode(str) {
+            if (typeof str === 'string' && str.includes('\\u')) {
+                return str.replace(/\\u([\dA-Fa-f]{4})/g, function (match, grp) {
+                    return String.fromCharCode(parseInt(grp, 16));
+                });
+            }
+            return str;
+        }
+    </script>
+</body>
+</html>

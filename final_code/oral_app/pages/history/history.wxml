@@ -1,0 +1,43 @@
+<view class="container">
+    <view class="page-title">历史记录</view>
+    
+    <view wx:if="{{historyList.length === 0}}" class="empty-container">
+        <image class="empty-icon" src="/images/empty-icon.png"></image>
+        <view class="empty-text">暂无历史记录</view>
+    </view>
+
+    <view wx:else class="history-list">
+        <view wx:for="{{historyList}}" wx:for-item="record" wx:for-index="recordIndex" wx:key="id" class="history-card">
+            <view class="card-header">
+                <view class="card-title-line">
+                    <view class="check-type">{{record.check_type === 'tooth' ? '牙科检查' : (record.check_type === 'tongue' ? '舌象诊断' : '文本问诊')}}</view>
+                    <view class="timestamp">{{record.created_at}}</view>
+                </view>
+                <button class="delete-btn" size="mini" bindtap="deleteRecord" data-id="{{record.id}}">删除</button>
+            </view>
+            
+            <view class="card-body">
+                <image wx:if="{{record.image_url}}" class="record-image" src="{{record.image_url}}" mode="aspectFill"></image>
+                
+                <!-- 展示 report.sections -->
+                <block wx:if="{{record.report && record.report.sections}}">
+                    <view class="sections-container">
+                        <view wx:for="{{record.report.sections}}" wx:for-item="section" wx:for-index="sectionIndex" wx:key="title" class="section-item">
+                            <view class="section-header" bindtap="toggleSection" data-record-index="{{recordIndex}}" data-section-index="{{sectionIndex}}">
+                                <view class="section-title">{{section.title}}</view>
+                                <image class="arrow-icon" src="{{section.isExpanded ? '/images/arrow-up.png' : '/images/arrow-down.png'}}"></image>
+                            </view>
+                            <view wx:if="{{section.isExpanded}}" class="section-body">{{section.body}}</view>
+                        </view>
+                    </view>
+                </block>
+                
+                <!-- 如果没有 sections，展示 description (兼容旧数据或纯文本聊天) -->
+                <block wx:elif="{{record.description}}">
+                    <view class="description-text">{{record.description}}</view>
+                </block>
+
+            </view>
+        </view>
+    </view>
+</view>

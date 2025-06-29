@@ -1,0 +1,44 @@
+<!-- miniprogram/pages/home/home.wxml -->
+<view class="home-container">
+  <!-- 欢迎区域 -->
+  <view class="welcome-section">
+    <view class="welcome-title">欢迎使用口腔AI助手</view>
+    <view class="welcome-subtitle">智能口腔健康管理，让专业医疗触手可及</view>
+    <button class="tutorial-btn" bindtap="openTutorial">查看使用教程</button>
+  </view>
+  
+  <!-- 功能卡片区域 -->
+  <view class="feature-grid">
+    <!-- 智能问诊卡片 -->
+    <navigator url="/pages/index/index" hover-class="none" class="feature-card">
+      <view class="feature-icon-description-group">
+        <image src="/images/chat-icon.png" class="feature-icon"></image>
+        <view class="feature-description">上传口腔图片，获取专业的AI分析建议，支持舌诊和牙科检查</view>
+      </view>
+      <view class="feature-title">智能问诊</view>
+    </navigator>
+    
+    <!-- 历史记录卡片 -->
+    <navigator url="/pages/history/history" hover-class="none" class="feature-card">
+      <view class="feature-icon-description-group">
+        <image src="/images/history-icon.png" class="feature-icon"></image>
+        <view class="feature-description">查看历史问诊记录，追踪口腔健康状况变化</view>
+      </view>
+      <view class="feature-title">历史记录</view>
+    </navigator>
+    
+    <!-- 历史分析卡片 -->
+    <navigator url="/pages/analysis/analysis" hover-class="none" class="feature-card">
+      <view class="feature-icon-description-group">
+        <image src="/images/analysis-icon.png" class="feature-icon"></image>
+        <view class="feature-description">分析历史数据，了解健康趋势，获取专业建议</view>
+      </view>
+      <view class="feature-title">历史分析</view>
+    </navigator>
+  </view>
+  
+  <!-- 健康预览区域替换为图片 -->
+  <view class="health-preview-image-wrap">
+    <image class="health-preview-image" src="/images/health.png" mode="widthFix"></image>
+  </view>
+</view>

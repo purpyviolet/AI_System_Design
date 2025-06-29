@@ -1,0 +1,99 @@
+/* miniprogram/pages/analysis/analysis.wxss */
+.container {
+  padding: 20rpx;
+  background-color: #f5f6fa;
+  min-height: 100vh;
+}
+
+.analysis-image {
+  width: 100%;
+  display: block;
+  margin-bottom: 20rpx;
+  border-radius: 16rpx;
+  box-shadow: 0 4rpx 20rpx rgba(0, 0, 0, 0.08);
+}
+
+.analysis-image:last-child {
+  margin-bottom: 0;
+}
+
+/* 时间范围选择器 */
+.time-range-selector {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 20rpx;
+  margin-bottom: 40rpx;
+}
+
+.time-range-btn {
+  padding: 10rpx 20rpx;
+  border: 2rpx solid #e5e7eb;
+  border-radius: 50rpx;
+  background-color: white;
+  font-size: 26rpx;
+  color: #666;
+  transition: all 0.3s;
+}
+
+.time-range-btn.active {
+  background-color: #2563eb;
+  color: white;
+  border-color: #2563eb;
+}
+
+/* 分析部分 */
+.analysis-section {
+  background-color: white;
+  border-radius: 24rpx;
+  padding: 40rpx;
+  margin-bottom: 40rpx;
+  box-shadow: 0 8rpx 24rpx rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  margin-bottom: 40rpx;
+  color: #1f2937;
+}
+
+/* 图表网格 */
+.chart-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40rpx;
+  margin-bottom: 40rpx;
+}
+
+@media (min-width: 768px) {
+  .chart-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.chart-container {
+  width: 100%;
+  height: 500rpx;
+}
+
+/* 总结部分 */
+.summary-section {
+  background-color: #f3f4f6;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-top: 40rpx;
+}
+
+.summary-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+  color: #1f2937;
+}
+
+.summary-content {
+  font-size: 28rpx;
+  color: #4b5563;
+  line-height: 1.6;
+}

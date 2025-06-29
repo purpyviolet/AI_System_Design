@@ -1,0 +1,32 @@
+<!-- miniprogram/pages/detail/detail.wxml -->
+<view class="container">
+  <!-- 返回按钮 -->
+  <view class="back-button" bindtap="navigateBack">
+    <image src="/images/back-icon.png" class="back-icon"></image>
+    <text>返回历史记录</text>
+  </view>
+
+  <!-- 详情卡片 -->
+  <view class="detail-card">
+    <!-- 元数据 -->
+    <view class="metadata">
+      <view>检查类型：{{record.check_type === 'tongue' ? '舌诊' : (record.check_type === 'tooth' ? '牙科' : '对话')}}</view>
+      <view>检查时间：{{record.created_at}}</view>
+    </view>
+
+    <!-- 图片展示 -->
+    <view class="image-container" wx:if="{{record.image_url}}">
+      <image src="{{record.image_url}}" mode="aspectFit" class="detail-image"></image>
+    </view>
+
+    <!-- 分析内容 -->
+    <view class="analysis-content">
+      {{record.description}}
+    </view>
+
+    <!-- 生成报告按钮 -->
+    <button class="generate-report" bindtap="generateReport">
+      生成报告
+    </button>
+  </view>
+</view>

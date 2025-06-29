@@ -1,0 +1,36 @@
+/* miniprogram/app.wxss */
+page {
+  background-color: #f8f8f8;
+  font-family: -apple-system-font, Helvetica Neue, sans-serif;
+}
+
+.container {
+  padding: 20rpx;
+}
+
+.btn-primary {
+  background-color: #4CAF50;
+  color: white;
+  border-radius: 8rpx;
+  padding: 20rpx 0;
+  text-align: center;
+  font-size: 32rpx;
+  margin: 30rpx 0;
+}
+
+.input-group {
+  margin-bottom: 30rpx;
+}
+
+.input-label {
+  font-size: 28rpx;
+  margin-bottom: 10rpx;
+  color: #555;
+}
+
+.input-field {
+  border: 1rpx solid #ddd;
+  border-radius: 8rpx;
+  padding: 20rpx;
+  font-size: 32rpx;
+}
