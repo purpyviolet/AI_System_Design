@@ -3,7 +3,6 @@ from flask import Flask, request, render_template, jsonify, send_from_directory,
 from model.tooth_classifier import classify_tooth
 from model.tongue_classifier import classify_tongue
 from model.llm_interface_api import init_prompt_with_tooth_result, init_prompt_with_tongue_result, chat_with_llm
-# from model.llm_interface import init_prompt_with_tooth_result, init_prompt_with_tongue_result, chat_with_llm
 from routes.analysis import analysis_bp
 from model.report_generate_ref import generate_structured_report, parse_report_content, create_pdf
 from speech_recognition import SpeechRecognition
@@ -373,7 +372,7 @@ def upload_audio():
     except Exception as e:
         print(f"音频处理失败: {str(e)}")
         return jsonify({'error': str(e)}), 500
-    
+
 @app.route('/api/news')
 def get_news():
     news = [
@@ -384,5 +383,6 @@ def get_news():
         {"title": "中医舌诊在现代医学中的应用", "url": "https://agelessherbs.com/mouth-tongue/", "summary": "介绍舌象、舌苔、唇色等在中医诊断中的意义及常见健康提示。", "image": "/static/tcm_tongue.jpg"}
     ]
     return jsonify(news)
+
 if __name__ == '__main__':
     app.run(debug=True)

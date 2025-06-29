@@ -274,5 +274,26 @@
       "label": "Calculus",
       "confidence": "0.49"
     }
+  },
+  {
+    "timestamp": "2025-06-20_17-30-56",
+    "data": {
+      "label": "Gingivitis",
+      "confidence": "0.91"
+    }
+  },
+  {
+    "timestamp": "2025-06-20_18-04-43",
+    "data": {
+      "label": "Gingivitis",
+      "confidence": "0.66"
+    }
+  },
+  {
+    "timestamp": "2025-06-24_15-19-31",
+    "data": {
+      "label": "Caries",
+      "confidence": "0.76"
+    }
   }
 ]

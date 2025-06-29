@@ -462,15 +462,8 @@
         </div>
 
         <div class="chat-area">
-            <!-- 欢迎区块：无对话时显示，有对话时隐藏 -->
-            <div id="welcome-section" style="display: flex; flex-direction: column; align-items: center; justify-content: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 100%; color: #333; z-index: 2;">
-                <img src="/static/logo.png" alt="Oral Insight" style="width: 120px; margin-bottom: 24px;">
-                <div style="font-size: 2rem; font-weight: bold; margin-bottom: 12px;">嗨！欢迎来到 <span style="color: #2563eb;">齿语舌观</span></div>
-                <div style="font-size: 1.1rem; color: #666; text-align: center;">我可以帮你分析口腔图片、答疑解惑、健康建议，请把你的问题或图片交给我吧~</div>
-            </div>
             <div class="messages" id="messages"></div>
             <div class="input-box">
-                <button id="clear-chat-btn" style="margin-right: 0.8rem; background: #f3f4f6; color: #2563eb; border: none; border-radius: 0.7rem; font-size: 1rem; cursor: pointer; padding: 0.5rem 1.1rem; align-self: flex-end;">清空对话</button>
                 <div class="input-container">
                     <textarea id="messageInput" placeholder="输入消息..." rows="1"></textarea>
                     <button class="voice-button" id="voiceButton" title="点击开始录音">
@@ -507,7 +500,6 @@
 
     <script>
         const messages = document.getElementById('messages');
-        const welcomeSection = document.getElementById('welcome-section');
         let isTyping = false;
         let chatHistory = [];
 
@@ -593,7 +585,6 @@
                     generateReportBtn.style.display = 'flex';
                 }
             }
-            updateWelcomeSection();
         }
 
         document.getElementById('upload-form').addEventListener('submit', async function (e) {
@@ -643,22 +634,35 @@
             wrapper.appendChild(bubble);
             messages.appendChild(wrapper);
             messages.scrollTop = messages.scrollHeight;
-            updateWelcomeSection();
         }
 
-        // 发送按钮事件绑定
-        const sendButton = document.getElementById('sendButton');
-        sendButton.addEventListener('click', function(e) {
-            e.preventDefault();
-            sendMessage();
-        });
-        // 输入框内容变化时，控制发送按钮可用状态
+        // 添加自动调整文本框高度的功能
         const textarea = document.getElementById('messageInput');
         textarea.addEventListener('input', function() {
             this.style.height = 'auto';
             this.style.height = (this.scrollHeight) + 'px';
-            sendButton.disabled = !this.value.trim();
         });
+
+        // 修改发送消息的函数
+        async function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            if (!message || isTyping) return;
+
+            appendMessage('user', message);
+            input.value = '';
+            input.style.height = 'auto';
+
+            isTyping = true;
+            const response = await fetch('/chat', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ message })
+            });
+
+            const result = await response.json();
+            appendMessage('bot', result.response, true);
+        }
 
         // 添加回车发送功能（Shift+Enter换行）
         textarea.addEventListener('keydown', function(e) {
@@ -1079,49 +1083,16 @@
                     alert('录音操作失败，请重试。');
                 }
             });
-        });
-
-        // 检查并切换欢迎区块显示
-        function updateWelcomeSection() {
-            // 判断消息区是否有内容
-            if (messages && messages.children.length > 0) {
-                welcomeSection.style.display = 'none';
-            } else {
-                welcomeSection.style.display = 'flex';
-            }
-        }
-
-        // 页面加载时初始化欢迎区块
-        document.addEventListener('DOMContentLoaded', updateWelcomeSection);
-
-        // sendMessage函数定义，确保在事件绑定前可用
-        async function sendMessage() {
-            const input = document.getElementById('messageInput');
-            const message = input.value.trim();
-            if (!message || isTyping) return;
-
-            appendMessage('user', message);
-            input.value = '';
-            input.style.height = 'auto';
-            sendButton.disabled = true;
-
-            isTyping = true;
-            const response = await fetch('/chat', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message })
+            
+            // 添加键盘快捷键支持（可选）
+            document.addEventListener('keydown', (e) => {
+                // 按空格键切换录音状态
+                if (e.code === 'Space' && !e.repeat) {
+                    e.preventDefault();
+                    voiceButton.click();
+                }
             });
-
-            const result = await response.json();
-            appendMessage('bot', result.response, true);
-        }
-
-        // 清空对话按钮功能
-        document.getElementById('clear-chat-btn').onclick = function() {
-            messages.innerHTML = '';
-            chatHistory = [];
-            updateWelcomeSection();
-        };
+        });
     </script>
 </body>
 </html>

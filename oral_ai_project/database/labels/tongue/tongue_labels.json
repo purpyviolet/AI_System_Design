@@ -529,5 +529,32 @@
       "thickness": 1,
       "rot_greasy": 1
     }
+  },
+  {
+    "timestamp": "2025-06-20_17-27-20",
+    "data": {
+      "tongue_color": 1,
+      "coating_color": 0,
+      "thickness": 0,
+      "rot_greasy": 1
+    }
+  },
+  {
+    "timestamp": "2025-06-23_23-41-32",
+    "data": {
+      "tongue_color": 0,
+      "coating_color": 0,
+      "thickness": 1,
+      "rot_greasy": 0
+    }
+  },
+  {
+    "timestamp": "2025-06-24_15-16-20",
+    "data": {
+      "tongue_color": 0,
+      "coating_color": 0,
+      "thickness": 0,
+      "rot_greasy": 0
+    }
   }
 ]
