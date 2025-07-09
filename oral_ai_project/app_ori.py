@@ -3,6 +3,7 @@ from flask import Flask, request, render_template, jsonify, send_from_directory,
 from model.tooth_classifier import classify_tooth
 from model.tongue_classifier import classify_tongue
 from model.llm_interface_api import init_prompt_with_tooth_result, init_prompt_with_tongue_result, chat_with_llm
+# from model.llm_interface import init_prompt_with_tooth_result, init_prompt_with_tongue_result, chat_with_llm
 from routes.analysis import analysis_bp
 from model.report_generate_ref import generate_structured_report, parse_report_content, create_pdf
 from speech_recognition import SpeechRecognition
@@ -372,6 +373,16 @@ def upload_audio():
     except Exception as e:
         print(f"音频处理失败: {str(e)}")
         return jsonify({'error': str(e)}), 500
-
+    
+@app.route('/api/news')
+def get_news():
+    news = [
+        {"title": "2024年\"全国爱牙日\"宣传主题发布", "url": "https://wjw.fj.gov.cn/xxgk/gzdt/mtbd/202409/t20240906_6512495.htm", "summary": "今年\"全国爱牙日\"主题为\"口腔健康全身健康\"，副主题\"全生命周期守护让健康从'齿'开始\"。各地将开展口腔健康宣传、义诊、科普等活动。", "image": "/static/aiya.png"},
+        {"title": "智能舌诊系统：深度学习助力中医诊断", "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC9600321/", "summary": "基于深度学习的智能舌诊系统，集成YOLOv5、U-Net、MobileNetV3等模型，实现舌象检测、分割和特征分类，推动中医舌诊客观化、智能化。", "image": "/static/tongue_ai.png"},
+        {"title": "儿童口腔健康：儿科医生干预可提升看牙率", "url": "https://www.nidcr.nih.gov/news-events/nidcr-news/2024/dental-visits-increase-support-pediatric-providers", "summary": "研究显示，儿科医生在体检时加强口腔健康教育和转诊，可显著提升儿童看牙率，减少龋齿等问题。", "image": "/static/child_tooth.png"},
+        {"title": "上海市2024年\"全国爱牙日\"活动通知", "url": "https://www.shanghai.gov.cn/gwk/search/content/9896786ef3954a86ae469d0445be0780", "summary": "上海将于9月20日举办\"全国爱牙日\"主题宣传活动，现场义诊、游园、科普讲堂等，普及口腔健康知识。", "image": "/static/shanghai_aiya.png"},
+        {"title": "中医舌诊在现代医学中的应用", "url": "https://agelessherbs.com/mouth-tongue/", "summary": "介绍舌象、舌苔、唇色等在中医诊断中的意义及常见健康提示。", "image": "/static/tcm_tongue.jpg"}
+    ]
+    return jsonify(news)
 if __name__ == '__main__':
     app.run(debug=True)

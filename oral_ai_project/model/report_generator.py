@@ -188,6 +188,7 @@ class ReportGenerator:
         return sections
 
     def generate_tongue_report(self, tongue_result, chat_history):
+        print("舌头报告生成中...")
         """生成舌头检查报告"""
         # 转换数字标签为文字描述
         converted_result = self.convert_numeric_labels(tongue_result)
@@ -212,6 +213,7 @@ class ReportGenerator:
 
         [对话记录]
         {self._format_chat_history(chat_history)}
+        不要有任何类似这样的内容：（请补充以下信息以便更精准判断：1.近期是否有乏力、怕冷等不适？2.日常饮食是否有偏嗜或食欲减退？）
         """
 
         # 调用大模型生成报告内容

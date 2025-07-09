@@ -35,7 +35,7 @@ class TeethClassifier:
 
     def __init__(self,
                  model_path='model/weights/best_model.pth',
-                 pretrained_weight_path='model/weights/efficientnet_b3_rwightman-cf984f9c.pth',
+                pretrained_weight_path='model/weights/efficientnet_b3_rwightman-cf984f9c.pth',
                  num_classes=6):
         if self._initialized:
             return
@@ -44,6 +44,7 @@ class TeethClassifier:
 
         # 初始化模型结构
         self.model = CustomEfficientNet(num_classes=num_classes, weight_path=pretrained_weight_path)
+        self.model = CustomEfficientNet(num_classes=num_classes)
         self.model.load_state_dict(torch.load(model_path, map_location='cpu'))
         self.model.to(self.device)
         self.model.eval()
@@ -90,7 +91,7 @@ def classify_tooth(image_path):
     return label
 
 
-if __name__ == "__main__":
-    classifier = TeethClassifier()
-    result = classifier.predict("D:/zyh/teeth_dataset/Data caries/Data caries/caries orignal data set/done/2.jpg")
-    print(f"Predicted class: {result['predicted_class']}, Confidence: {result['confidence']:.4f}")
+# if __name__ == "__main__":
+#     classifier = TeethClassifier()
+#     result = classifier.predict("D:/zyh/teeth_dataset/Data caries/Data caries/caries orignal data set/done/2.jpg")
+#     print(f"Predicted class: {result['predicted_class']}, Confidence: {result['confidence']:.4f}")

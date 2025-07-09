@@ -185,6 +185,21 @@
             margin-bottom: 1rem;
             color: #9ca3af;
         }
+
+        .section-block {
+            margin-bottom: 0.5em;
+        }
+
+        .section-title {
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .section-body {
+            display: none;
+            margin-top: 0.3em;
+            color: #444;
+        }
     </style>
 </head>
 <body>
@@ -242,9 +257,20 @@
                                 <span class="history-date">${new Date(item.created_at).toLocaleString()}</span>
                             </div>
                             <h3 class="history-title">${item.title || '问诊记录'}</h3>
-                            <p class="history-description">${item.description || '暂无描述'}</p>
+                            <div class="history-description">
+                                ${(item.report && item.report.sections) ?
+                                    item.report.sections.map((section, idx) =>
+                                        `<div class="section-block" style="margin-bottom:0.5em;">
+                                            <div class="section-title" style="cursor:pointer;font-weight:bold;" onclick="toggleSection(this)">
+                                                ${section.title}
+                                                <span style='font-weight:normal;color:#2563eb;margin-left:8px;'>[${idx===0?'展开':'收起'}]</span>
+                                            </div>
+                                            <div class="section-body" style="display:none;margin-top:0.3em;color:#444;">${section.body.replace(/\n/g, '<br>')}</div>
+                                        </div>`
+                                    ).join('')
+                                    : '暂无报告内容'}
+                            </div>
                             <div class="history-actions">
-                                <button class="action-button view-button" onclick="viewDetail('${item.id}')">查看详情</button>
                                 <button class="action-button delete-button" onclick="deleteRecord('${item.id}')">删除记录</button>
                             </div>
                         </div>
@@ -277,6 +303,18 @@
             } catch (error) {
                 console.error('删除记录失败:', error);
                 alert('删除失败，请重试');
+            }
+        }
+
+        // 折叠/展开section内容
+        function toggleSection(titleDiv) {
+            const bodyDiv = titleDiv.nextElementSibling;
+            if (bodyDiv.style.display === 'none' || bodyDiv.style.display === '') {
+                bodyDiv.style.display = 'block';
+                titleDiv.querySelector('span').textContent = '[收起]';
+            } else {
+                bodyDiv.style.display = 'none';
+                titleDiv.querySelector('span').textContent = '[展开]';
             }
         }
 

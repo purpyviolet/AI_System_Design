@@ -295,5 +295,12 @@
       "label": "Caries",
       "confidence": "0.76"
     }
+  },
+  {
+    "timestamp": "2025-07-09_15-16-51",
+    "data": {
+      "label": "Gingivitis",
+      "confidence": "0.62"
+    }
   }
 ]

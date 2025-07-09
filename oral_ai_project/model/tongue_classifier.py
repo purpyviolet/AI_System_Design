@@ -17,11 +17,14 @@ class TongueAnalyzer:
                      'model/weights/thickness.pth',
                      'model/weights/rot_and_greasy.pth'
                  ]):
-        self.device = torch.device('cuda:0')
+        # 动态选择设备：如果CUDA可用则使用GPU，否则使用CPU
+        self.device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+        print(f"正在使用设备: {self.device}")
 
         # 加载模型
-        self.yolo = load(yolo_path, device='cuda:0')
+        self.yolo = load(yolo_path, device=self.device)
         self.sam = sam_model_registry["vit_b"](checkpoint=sam_path)
+        self.sam.to(device=self.device)  # 将SAM模型也移动到指定设备
         self.resnet = ResNetPredictor(resnet_path)
 
     def analyze(self, img_path):
@@ -96,8 +99,8 @@ def classify_tongue(image_path):
     }
 
 
-# 本地测试（可选）
-if __name__ == "__main__":
-    image_path = "D:\\zyh\\舌象\\淡白舌黄苔\\淡白舌黄苔厚苔非腻苔\\1809.jpg"
-    result = classify_tongue(image_path)
-    print("舌象分析结果：", result)
+# # 本地测试（可选）
+# if __name__ == "__main__":
+#     image_path = "D:/华南理工/工导2.0/舌象/舌象/淡白舌白苔/淡白舌白苔薄苔非腻苔/3106.jpg"
+#     result = classify_tongue(image_path)
+#     print("舌象分析结果：", result)

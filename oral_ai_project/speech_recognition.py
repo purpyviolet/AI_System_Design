@@ -8,8 +8,8 @@ from urllib.parse import urlencode
 
 class SpeechRecognition:
     def __init__(self):
-        self.API_KEY = 'ZiyCG2S8pZ8g8Kq1vDzIncts'
-        self.SECRET_KEY = 'xQ2DsAqAvHWuwt3qVqbre49ntzfMYSza'
+        self.API_KEY = 'ZiyCG2S8pZ8g8Kq1vDzIncts1' # replace with your own API key
+        self.SECRET_KEY = 'xQ2DsAqAvHWuwt3qVqbre49ntzfMYSza1' # replace with your own SECRET KEY
         self.TOKEN_URL = 'http://aip.baidubce.com/oauth/2.0/token'
         self.ASR_URL = 'http://vop.baidu.com/server_api'
         self.DEV_PID = 1537  # 普通话识别

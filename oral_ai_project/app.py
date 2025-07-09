@@ -1,11 +1,9 @@
 # app.py
-from flask import Flask, request, render_template, jsonify, send_from_directory, send_file
+from flask import Flask, request, render_template, jsonify, send_from_directory, send_file, Response
 from model.tooth_classifier import classify_tooth
 from model.tongue_classifier import classify_tongue
 from model.llm_interface_api import init_prompt_with_tooth_result, init_prompt_with_tongue_result, chat_with_llm
-# from model.llm_interface import init_prompt_with_tooth_result, init_prompt_with_tongue_result, chat_with_llm
 from routes.analysis import analysis_bp
-from model.report_generate_ref import generate_structured_report, parse_report_content, create_pdf
 from speech_recognition import SpeechRecognition
 import os
 from datetime import datetime
@@ -63,7 +61,7 @@ if not os.path.exists(AUDIO_CACHE_DIR):
 
 @app.route('/uploads/<filename>')
 def uploaded_file(filename):
-    return send_from_directory('uploads', filename)
+    return send_from_directory(UPLOAD_FOLDER, filename)
 
 @app.route('/')
 def home():
@@ -106,21 +104,18 @@ def delete_history(id):
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
-@app.route('/history/<id>')
-def history_detail(id):
+@app.route('/api/history/<id>', methods=['GET'])
+def get_history_detail(id):
     try:
         with open(HISTORY_FILE, 'r', encoding='utf-8') as f:
             history = json.load(f)
-        
-        # 找到指定记录
-        record = next((item for item in history if item['id'] == id), None)
-        
+        # 用字符串比较，避免类型不一致
+        record = next((item for item in history if str(item.get('id')) == str(id)), None)
         if record is None:
-            return "记录不存在", 404
-        
-        return render_template('detail.html', record=record)
+            return jsonify({'error': '记录不存在'}), 404
+        return jsonify(record)
     except Exception as e:
-        return str(e), 500
+        return jsonify({'error': str(e)}), 500
 
 def save_labels(check_type, labels, timestamp):
     """保存标签到对应的JSON文件"""
@@ -207,28 +202,7 @@ def upload_image():
             # 获取AI分析结果
             response = chat_with_llm(initial_prompt)
             
-            # 保存到历史记录
-            history_item = {
-                'id': timestamp,
-                'image_url': f'/uploads/{filename}',
-                'check_type': check_type,
-                'created_at': current_time.isoformat(),
-                'title': f'{check_type}检查',
-                'description': response
-            }
-            
-            try:
-                with open(HISTORY_FILE, 'r', encoding='utf-8') as f:
-                    history = json.load(f)
-                
-                history.append(history_item)
-                
-                with open(HISTORY_FILE, 'w', encoding='utf-8') as f:
-                    json.dump(history, f, ensure_ascii=False, indent=2)
-            except Exception as e:
-                print(f'保存历史记录失败: {str(e)}')
-            
-            # 返回结果
+            # 返回结果（不再写入历史）
             return jsonify({
                 'response': response,
                 'filename': filename,
@@ -243,12 +217,14 @@ def upload_image():
 def chat_api():
     data = request.json
     message = data.get('message', '')
-    
+    history = data.get('history', [])
     try:
-        response = chat_with_llm(message)
+        # 直接返回完整回复
+        response = chat_with_llm(message, history)
         return jsonify({'response': response})
     except Exception as e:
-        return jsonify({'error': f'对话失败：{str(e)}'}), 500
+        print(f'对话失败: {e}')
+        return jsonify({'error': str(e)}), 500
 
 @app.route('/generate_report', methods=['POST'])
 def generate_report():
@@ -256,13 +232,20 @@ def generate_report():
         data = request.json
         history = data.get('history', [])
         print("收到生成报告请求")
-        # print(f"历史记录: {history}")
+        print(f"历史记录: {history}")
         
         # 获取最后一次上传的图片分析结果
         last_image_result = None
+        image_url = None
         for msg in reversed(history):
             if msg.get('type') == 'image_analysis':
                 last_image_result = msg.get('result')
+                # 新增：优先用filename拼接图片地址
+                filename = msg.get('filename') or (last_image_result.get('filename') if last_image_result else None)
+                if filename:
+                    image_url = f'/static/uploads/{filename}'
+                else:
+                    image_url = msg.get('image_url') if 'image_url' in msg else None
                 break
         
         print(f"找到的图片分析结果: {last_image_result}")
@@ -276,31 +259,24 @@ def generate_report():
         
         # 根据检查类型生成报告
         check_type = last_image_result.get('check_type')
-        # print(f"检查类型: {check_type}")
-        
+        print(f"检查类型: {check_type}")
         if check_type == 'tongue':
-            # 确保数据格式正确
             tongue_data = {
                 'tongue_color': last_image_result.get('tongue_color'),
                 'coating_color': last_image_result.get('coating_color'),
                 'thickness': last_image_result.get('thickness'),
                 'rot_greasy': last_image_result.get('rot_greasy')
             }
-            # print(f"舌头数据: {tongue_data}")
             report = report_generator.generate_tongue_report(tongue_data, history)
         elif check_type == 'tooth':
-            # 确保数据格式正确
             tooth_data = {
                 'label': last_image_result.get('label'),
                 'confidence': last_image_result.get('confidence')
             }
-            # print(f"牙齿数据: {tooth_data}")
             report = report_generator.generate_tooth_report(tooth_data, history)
         else:
             print(f"不支持的检查类型: {check_type}")
             return jsonify({'error': '暂不支持该类型的报告生成'}), 400
-        
-        # print(f"生成的报告: {report}")
         
         if not report:
             print("报告生成器返回空结果")
@@ -309,20 +285,39 @@ def generate_report():
         # 创建临时文件
         try:
             with tempfile.NamedTemporaryFile(suffix='.pdf', delete=False) as tmp:
+                #print("report: ", report)
                 # 生成PDF
                 report_generator.create_pdf(report, tmp.name)
+                
+                # ====== 新增：生成报告后写入历史 ======
+                timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+                history_item = {
+                    'id': timestamp,
+                    'image_url': image_url,
+                    'check_type': check_type,
+                    'created_at': datetime.now().isoformat(),
+                    'title': report.get('title', f'{check_type}检查'),
+                    'report': report
+                }
+                try:
+                    with open(HISTORY_FILE, 'r', encoding='utf-8') as f:
+                        all_history = json.load(f)
+                except Exception:
+                    all_history = []
+                all_history.append(history_item)
+                with open(HISTORY_FILE, 'w', encoding='utf-8') as f:
+                    json.dump(all_history, f, ensure_ascii=False, indent=2)
+                # ====== 新增结束 ======
                 
                 # 发送文件
                 return send_file(
                     tmp.name,
-                    as_attachment=True,
-                    download_name=f"{'舌诊' if check_type == 'tongue' else '牙科'}检查报告_{datetime.now().strftime('%Y%m%d')}.pdf",
                     mimetype='application/pdf'
                 )
         except Exception as e:
             print(f"PDF生成失败: {str(e)}")
             return jsonify({'error': f'PDF生成失败：{str(e)}'}), 500
-            
+        
     except Exception as e:
         print(f"生成报告失败: {str(e)}")
         return jsonify({'error': f'生成报告失败：{str(e)}'}), 500
@@ -373,7 +368,7 @@ def upload_audio():
     except Exception as e:
         print(f"音频处理失败: {str(e)}")
         return jsonify({'error': str(e)}), 500
-    
+
 @app.route('/api/news')
 def get_news():
     news = [
@@ -384,5 +379,6 @@ def get_news():
         {"title": "中医舌诊在现代医学中的应用", "url": "https://agelessherbs.com/mouth-tongue/", "summary": "介绍舌象、舌苔、唇色等在中医诊断中的意义及常见健康提示。", "image": "/static/tcm_tongue.jpg"}
     ]
     return jsonify(news)
+
 if __name__ == '__main__':
     app.run(debug=True)

@@ -75,7 +75,6 @@
             flex: 1;
             display: flex;
             height: 100%;
-            padding-right: 120px;
         }
 
         .sidebar {
@@ -533,13 +532,13 @@
             return text;
         }
 
-        function appendMessage(role, text, isTypingEffect = false) {
+        function appendMessage(role, text, isTypingEffect = false, isStreaming = false) {
             const wrapper = document.createElement('div');
             wrapper.className = `message-wrapper ${role}`;
             
             const avatar = document.createElement('img');
             avatar.className = 'avatar';
-            avatar.src = role === 'user' ? '/static/user-avatar.png' : '/static/bot-avatar.png';
+            avatar.src = role === 'user' ? '/static/user-avatar.png' : '/static/logo.png';
             avatar.alt = role === 'user' ? '用户头像' : 'AI助手头像';
             
             const bubble = document.createElement('div');
@@ -548,29 +547,13 @@
             const content = document.createElement('div');
             content.className = 'message-content';
             
-            if (isTypingEffect && role === 'bot') {
-                // 添加打字指示器
+            if (isStreaming && role === 'bot') {
                 const typingIndicator = document.createElement('div');
                 typingIndicator.className = 'typing-indicator';
                 typingIndicator.innerHTML = '<span></span><span></span><span></span>';
                 content.appendChild(typingIndicator);
-                
-                // 开始打字效果
-                let index = 0;
-                const typingInterval = setInterval(() => {
-                    if (index < text.length) {
-                        content.removeChild(typingIndicator);
-                        content.innerHTML = formatMessage(text.substring(0, index + 1));
-                        content.appendChild(typingIndicator);
-                        index++;
-                    } else {
-                        content.removeChild(typingIndicator);
-                        content.innerHTML = formatMessage(text);
-                        clearInterval(typingInterval);
-                        isTyping = false;
-                    }
-                }, 50);
-            } else {
+            }
+            else {
                 content.innerHTML = formatMessage(text);
             }
             
@@ -580,11 +563,17 @@
             messages.appendChild(wrapper);
             messages.scrollTop = messages.scrollHeight;
             
-            // 保存对话历史
+            // 为流式响应预先创建历史记录占位符
+            const apiRole = role === 'bot' ? 'assistant' : role;
+            if (isStreaming) {
+                chatHistory.push({ role: apiRole, content: '' });
+            } else {
+                 // 正常添加历史记录
             chatHistory.push({
-                role: role,
+                    role: apiRole,
                 content: text
             });
+            }
 
             // 如果是AI回复，显示生成报告按钮
             if (role === 'bot') {
@@ -594,6 +583,8 @@
                 }
             }
             updateWelcomeSection();
+
+            return content; // 返回内容元素，用于流式更新
         }
 
         document.getElementById('upload-form').addEventListener('submit', async function (e) {
@@ -622,7 +613,7 @@
 
             const avatar = document.createElement('img');
             avatar.className = 'avatar';
-            avatar.src = role === 'user' ? '/static/user-avatar.png' : '/static/bot-avatar.png';
+            avatar.src = role === 'user' ? '/static/user-avatar.png' : '/static/logo.png';
             avatar.alt = role === 'user' ? '用户头像' : 'AI助手头像';
 
             const bubble = document.createElement('div');
@@ -738,10 +729,17 @@
             console.log("上传图片，检查类型:", checkType);
 
             // 立即显示上传的图片和状态
-            appendImage('user', `/uploads/${file.name}`);
-            appendMessage('user', '已上传图片，正在分析…');
+            appendImage('user', URL.createObjectURL(file));
+            // 为图片上传的初始提问也创建一个历史占位符
+            appendMessage('user', '已上传图片，请进行分析。');
+
+            isTyping = true;
+            const botMessageContent = appendMessage('bot', '', false, true);
+            let fullResponse = '';
 
             try {
+                // 注意：/upload_image 接口不是流式的，它是一次性返回的
+                // 我们需要一个流式的初始分析接口，或者在这里模拟流式
                 const response = await fetch('/upload_image', {
                     method: 'POST',
                     body: formData
@@ -750,36 +748,42 @@
                 const result = await response.json();
                 
                 if (result.error) {
-                    appendMessage('bot', `分析失败：${result.error}`);
+                    fullResponse = `分析失败：${result.error}`;
                 } else {
-                    isTyping = true;
-                    appendMessage('bot', result.response, true);
+                    fullResponse = result.response;
                     
-                    // 保存分析结果到历史记录
+                    // 将图片分析结果保存到另一条历史记录中，以便生成报告
                     const analysisResult = {
                         type: 'image_analysis',
                         result: {
-                            check_type: checkType
-                        }
+                            check_type: checkType,
+                            // 牙齿或舌诊的分析结果
+                            ...(checkType === 'tooth' ? {
+                                label: result.label,
+                                confidence: result.confidence
+                            } : {
+                                tongue_color: result.tongue_color,
+                                coating_color: result.coating_color,
+                                thickness: result.thickness,
+                                rot_greasy: result.rot_greasy
+                            }),
+                            filename: result.filename // 新增，便于后端拼接图片地址
+                        },
+                        filename: result.filename, // 新增，便于后端直接获取
+                        image_url: `/static/uploads/${result.filename}` // 保持兼容
                     };
-
-                    // 根据检查类型保存不同的数据
-                    if (checkType === 'tooth') {
-                        analysisResult.result.label = result.label;
-                        analysisResult.result.confidence = result.confidence;
-                    } else {
-                        // 舌诊数据
-                        analysisResult.result.tongue_color = result.tongue_color;
-                        analysisResult.result.coating_color = result.coating_color;
-                        analysisResult.result.thickness = result.thickness;
-                        analysisResult.result.rot_greasy = result.rot_greasy;
-                    }
-
                     chatHistory.push(analysisResult);
                 }
             } catch (error) {
                 console.error('Upload error:', error);
-                appendMessage('bot', '上传失败，请重试');
+                fullResponse = '上传或分析失败，请重试';
+            } finally {
+                 // 更新UI和历史记录
+                botMessageContent.innerHTML = formatMessage(fullResponse);
+                chatHistory[chatHistory.length - 1].content = fullResponse;
+                isTyping = false;
+                const typingIndicator = botMessageContent.querySelector('.typing-indicator');
+                if(typingIndicator) typingIndicator.remove();
             }
         }
 
@@ -1105,23 +1109,92 @@
             input.style.height = 'auto';
             sendButton.disabled = true;
 
+            // 准备API请求的聊天记录，并过滤掉非对话内容（如图片分析结果对象）
+            const historyForApi = chatHistory.slice(0, -1).filter(item => item.role && item.content);
+            // === 这里插入调试代码 ===
+            console.log('message:', message);
+            console.log('historyForApi:', historyForApi);
+            console.log('stringify:', JSON.stringify({ message, history: historyForApi }));
+            // =====================
             isTyping = true;
+
+            // 创建一个空的bot消息气泡用于填充流式响应
+            const botMessageContent = appendMessage('bot', '', false, true);
+            let fullResponse = '';
+
+            try {
             const response = await fetch('/chat', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ message })
+                    body: JSON.stringify({ message: message, history: historyForApi })
+                    //body: JSON.stringify({ message })
             });
 
-            const result = await response.json();
-            appendMessage('bot', result.response, true);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+
+                while (true) {
+                    const { value, done } = await reader.read();
+                    if (done) break;
+                    
+                    const chunk = decoder.decode(value, { stream: true });
+                    console.log('chunk:', chunk);
+                    fullResponse += chunk;
+                    botMessageContent.innerHTML = formatMessage(fullResponse);
+                    messages.scrollTop = messages.scrollHeight;
+                }
+                console.log('最终fullResponse:', fullResponse);
+                
+                // 更新完整历史记录
+                chatHistory[chatHistory.length - 1].content = fullResponse;
+
+                // 新增：递归提取response内容，避免输出{response: ...}格式
+                let responseText = extractResponseText(fullResponse);
+                responseText = decodeUnicode(responseText);
+                botMessageContent.innerHTML = formatMessage(responseText);
+
+            } catch (error) {
+                botMessageContent.innerHTML = "对话时遇到错误，请重试。";
+                console.error("Streaming error:", error);
+            } finally {
+                isTyping = false;
+                // 移除打字指示器（如果还存在）
+                const typingIndicator = botMessageContent.querySelector('.typing-indicator');
+                if(typingIndicator) typingIndicator.remove();
+            }
         }
 
-        // 清空对话按钮功能
-        document.getElementById('clear-chat-btn').onclick = function() {
-            messages.innerHTML = '';
-            chatHistory = [];
-            updateWelcomeSection();
-        };
+        // 新增：递归提取response内容，避免输出{response: ...}格式
+        function extractResponseText(str) {
+            let result = str;
+            while (true) {
+                try {
+                    const obj = JSON.parse(result);
+                    if (typeof obj === 'object' && obj.response) {
+                        result = obj.response;
+                    } else {
+                        break;
+                    }
+                } catch (e) {
+                    break;
+                }
+            }
+            return result;
+        }
+
+        // 新增：Unicode解码函数
+        function decodeUnicode(str) {
+            if (typeof str === 'string' && str.includes('\\u')) {
+                return str.replace(/\\u([\dA-Fa-f]{4})/g, function (match, grp) {
+                    return String.fromCharCode(parseInt(grp, 16));
+                });
+            }
+            return str;
+        }
     </script>
 </body>
 </html>
