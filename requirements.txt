@@ -1,0 +1,9 @@
+flask==2.2.2
+yolov5==7.0.14
+torch==2.1.0
+segment-anything==1.0
+fpdf==1.7.2
+tqdm==4.67.1
+transformers==4.49.0
+openai==1.79.0
+opencv-python==4.9.0.80
