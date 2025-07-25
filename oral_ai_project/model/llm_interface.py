@@ -9,7 +9,7 @@ _tokenizer = None
 def load_llm_model():
     global _model, _tokenizer
     if _model is None or _tokenizer is None:
-        model_dir = r"D:/zyh/care_bot_model/CareBot_Medical_multi-llama3-8b-instruct"
+        model_dir = r"your/path/to/model"
         _tokenizer = AutoTokenizer.from_pretrained(model_dir, use_fast=True)
         _model = AutoModelForCausalLM.from_pretrained(
             model_dir,
