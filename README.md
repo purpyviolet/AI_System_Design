@@ -107,3 +107,7 @@ python app.py
 ![oral_insight1](image/oral1.png)
 
 ![oral_insight2](image/oral2.png)
+
+## Acknowledgement
+
+本项目舌诊识别部分权重文件由 [TonguePicture-SKaRD/TongueDiagnosis: TCM tongue diagnosis project Web application development, 中医舌诊项目Web应用开发](https://github.com/TonguePicture-SKaRD/TongueDiagnosis) 提供，特此致谢。
